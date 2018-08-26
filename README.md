@@ -4,7 +4,8 @@ FORD EEC-IV full diagnostic
 
 FORD EEC-IV scanner
 =================
-Java desktop project for diagnostic Ford cars with EEC-IV engine control unit. 
+Java desktop project for diagnostic petrol multipoint injection for cars with 
+Ford EEC-IV engine control unit.
  
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/babroval/ford-eec-iv-scanner/blob/master/LICENSE)
 ```
