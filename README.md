@@ -1,7 +1,7 @@
 ![Alt text](Ford_EEC-IV_scanner.png)
 
-FORD EEC-IV scanner
-=================
+FORD EEC-IV diagnostic scanner
+==============================
 Java desktop project for diagnostic petrol multipoint injection for cars with 
 Ford EEC-IV engine control unit.
  
