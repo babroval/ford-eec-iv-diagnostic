@@ -1,4 +1,4 @@
-![Alt text](Ford EEC-IV scanner schematic.png)
+![Alt text](Ford_EEC-IV_scanner.png)
 
 FORD EEC-IV scanner
 =================
