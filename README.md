@@ -1,6 +1,7 @@
 FORD EEC-IV full diagnostic
 
-![Alt text](usage.png)
+![Alt text](Ford EEC-IV scanner schematic.png)
+![Alt text](Ford EEC-IV scanner.png)
 
 FORD EEC-IV scanner
 =================
