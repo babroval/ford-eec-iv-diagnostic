@@ -1,7 +1,4 @@
-FORD EEC-IV full diagnostic
-
 ![Alt text](Ford EEC-IV scanner schematic.png)
-![Alt text](Ford EEC-IV scanner.png)
 
 FORD EEC-IV scanner
 =================
@@ -12,7 +9,6 @@ Ford EEC-IV engine control unit.
 ```
 
 ```
-
 Table of Contents
 -----------------
   * [Requirements](#requirements)
