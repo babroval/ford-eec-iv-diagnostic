@@ -15,9 +15,9 @@ rjmp UART0_CMD ;go to label Receive_Complete
 
 USART0_Init:
   ; Set baud rate
-ldi r16,0 ; 50325 fore 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 50325 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR0H,r16 
-ldi r16,19 ; 50325 fore 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,19 ; 50325 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts 0x29,r16  ;UBRR0L
   ; Enable receiver and transmitter
 ldi r16,(1<<RXCIE0)|(1<<RXEN0)|(1<<TXEN0)
@@ -74,9 +74,9 @@ sbci r18, 0       ;ubtract with transfer from the register r18
 brcc delayMain       ;If there was no transfer back to the label delay
 
   ; Set baud rate
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
  ; Flush Recever
@@ -321,9 +321,9 @@ rjmp  USART_19200
 USART_9600:
 
 ; Set baud rate
-ldi r16,0 ; 9600 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 9600 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,104 ; 9600 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,103 ; 9600 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
  
  ; Flush Recever
@@ -473,9 +473,9 @@ sbci r17, 0
 brcc del90        
 
 ; Set baud rate
-ldi r16,0 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,25 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,25 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
    ; Put data (r16) into buffer, sends the data
 
@@ -484,9 +484,9 @@ dela90:           ;Delay cycle
 sbci r16, 1      
 brcc dela90 
 
-ldi r16,0 ; 9600 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 9600 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,104 ; 9600 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,103 ; 9600 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r19,176 ;send $B0
@@ -560,9 +560,9 @@ sbci r17, 0
 brcc del91       
 
 ; Set baud rate
-ldi r16,0 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,25 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,25 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
    ; Put data (r16) into buffer, sends the data
 
@@ -571,9 +571,9 @@ dela91:           ;Delay cycle
 sbci r16, 1      
 brcc dela91        
 
-ldi r16,0 ; 9600 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 9600 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,104 ; 9600 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,103 ; 9600 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Put data (r16) into buffer, sends the data
@@ -648,9 +648,9 @@ sbci r17, 0
 brcc del92        
 
 ; Set baud rate
-ldi r16,0 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,25 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,25 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
    ; Put data (r16) into buffer, sends the data
 
@@ -659,9 +659,9 @@ dela92:           ;Delay cycle
 sbci r16, 1      
 brcc dela92   
 
-ldi r16,0 ; 9600 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 9600 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,104 ; 9600 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,103 ; 9600 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Put data (r16) into buffer, sends the data
@@ -736,9 +736,9 @@ sbci r17, 0
 brcc del93        
 
 ; Set baud rate
-ldi r16,0 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,25 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,25 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
    ; Put data (r16) into buffer, sends the data
 
@@ -747,9 +747,9 @@ dela93:           ;Delay cycle
 sbci r16, 1      
 brcc dela93   
 
-ldi r16,0 ; 9600 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 9600 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,104 ; 9600 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,103 ; 9600 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Put data (r16) into buffer, sends the data
@@ -766,9 +766,9 @@ brcc delay93
 cbi PORTD,4 ;Switch to receive
 
 ; Set baud rate
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
  ; Flush Recever
@@ -800,9 +800,9 @@ rjmp USART_24
 USART_19200:
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Flush Recever
@@ -955,9 +955,9 @@ sbci r17, 0
 brcc del0        
 
 ; Set baud rate
-ldi r16,0 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,25 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,25 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
    ; Put data (r16) into buffer, sends the data
 
@@ -966,9 +966,9 @@ dela0:           ;Delay cycle
 sbci r16, 1      
 brcc dela0       
 
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r19,176 ;send $B0
@@ -1042,9 +1042,9 @@ sbci r17, 0
 brcc del1       
 
 ; Set baud rate
-ldi r16,0 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,25 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,25 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
    ; Put data (r16) into buffer, sends the data
 
@@ -1053,9 +1053,9 @@ dela1:           ;Delay cycle
 sbci r16, 1      
 brcc dela1       
 
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Put data (r16) into buffer, sends the data
@@ -1130,9 +1130,9 @@ sbci r17, 0
 brcc del2        
 
 ; Set baud rate
-ldi r16,0 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,25 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,25 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
    ; Put data (r16) into buffer, sends the data
 
@@ -1141,9 +1141,9 @@ dela2:           ;Delay cycle
 sbci r16, 1      
 brcc dela2       
 
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Put data (r16) into buffer, sends the data
@@ -1218,9 +1218,9 @@ sbci r17, 0
 brcc del3        
 
 ; Set baud rate
-ldi r16,0 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,25 ; 38400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,25 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
    ; Put data (r16) into buffer, sends the data
 
@@ -1229,9 +1229,9 @@ dela3:          ;Delay cycle
 sbci r16, 1       
 brcc dela3       
 
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Put data (r16) into buffer, sends the data
@@ -1247,9 +1247,9 @@ brcc delay3
 
 cbi PORTD,4 ;Switch to receive
  ; Set baud rate
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Flush Recever
@@ -1509,9 +1509,9 @@ sbci r17, 0
 brcc C2A0       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -1521,9 +1521,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3A0     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -1680,9 +1680,9 @@ sbci r17, 0
 brcc C2B1       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255     
@@ -1692,9 +1692,9 @@ subi r16, 1
 sbci r17, 0       
 brcc C3B1       
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Put data (r16) into buffer, sends the data
@@ -1848,9 +1848,9 @@ sbci r17, 0
 brcc C282    
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255   
@@ -1860,9 +1860,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C382     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Put data (r16) into buffer, sends the data
@@ -2030,9 +2030,9 @@ sbci r17, 0
 brcc C293    
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255   
@@ -2042,9 +2042,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C393     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
   ; Put data (r16) into buffer, sends the data
@@ -2222,9 +2222,9 @@ sbci r17, 0
 brcc C2E41       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -2234,9 +2234,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3E42     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -2262,9 +2262,9 @@ sbci r17, 0
 brcc C2E411       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -2274,9 +2274,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3E422     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -2302,9 +2302,9 @@ sbci r17, 0
 brcc C2E4111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -2314,9 +2314,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3E4222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -2342,9 +2342,9 @@ sbci r17, 0
 brcc C2E41111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -2354,9 +2354,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3E42222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -2605,9 +2605,9 @@ sbci r17, 0
 brcc C2F51       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -2617,9 +2617,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3F52     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -2645,9 +2645,9 @@ sbci r17, 0
 brcc C2F511       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -2657,9 +2657,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3F522     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -2685,9 +2685,9 @@ sbci r17, 0
 brcc C2F5111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -2697,9 +2697,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3F5222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -2725,9 +2725,9 @@ sbci r17, 0
 brcc C2F51111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -2737,9 +2737,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3F52222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -2979,9 +2979,9 @@ sbci r17, 0
 brcc C2C61       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -2991,9 +2991,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3C62     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -3019,9 +3019,9 @@ sbci r17, 0
 brcc C2C611       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -3031,9 +3031,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3C622     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -3059,9 +3059,9 @@ sbci r17, 0
 brcc C2C6111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -3071,9 +3071,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3C6222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -3099,9 +3099,9 @@ sbci r17, 0
 brcc C2C61111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -3111,9 +3111,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3C62222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -3353,9 +3353,9 @@ sbci r17, 0
 brcc C2D71       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -3365,9 +3365,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3D72     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -3393,9 +3393,9 @@ sbci r17, 0
 brcc C2D711       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -3405,9 +3405,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3D722     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -3433,9 +3433,9 @@ sbci r17, 0
 brcc C2D7111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -3445,9 +3445,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3D7222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -3473,9 +3473,9 @@ sbci r17, 0
 brcc C2D71111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -3485,9 +3485,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C3D72222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4233,9 +4233,9 @@ sbci r17, 0
 brcc C26C1       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4245,9 +4245,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C36C2     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4273,9 +4273,9 @@ sbci r17, 0
 brcc C26C11       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4285,9 +4285,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C36C22     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4313,9 +4313,9 @@ sbci r17, 0
 brcc C26C111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4325,9 +4325,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C36C222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4353,9 +4353,9 @@ sbci r17, 0
 brcc C26C1111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4365,9 +4365,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C36C2222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4567,9 +4567,9 @@ sbci r17, 0
 brcc C27D1       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4579,9 +4579,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C37D2     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4607,9 +4607,9 @@ sbci r17, 0
 brcc C27D11       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4619,9 +4619,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C37D22     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4647,9 +4647,9 @@ sbci r17, 0
 brcc C27D111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4659,9 +4659,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C37D222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4687,9 +4687,9 @@ sbci r17, 0
 brcc C27D1111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4699,9 +4699,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C37D2222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4900,9 +4900,9 @@ sbci r17, 0
 brcc C24E1       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4912,9 +4912,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C34E2     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4940,9 +4940,9 @@ sbci r17, 0
 brcc C24E11       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4952,9 +4952,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C34E22     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -4980,9 +4980,9 @@ sbci r17, 0
 brcc C24E111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -4992,9 +4992,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C34E222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -5020,9 +5020,9 @@ sbci r17, 0
 brcc C24E1111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -5032,9 +5032,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C34E2222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -5234,9 +5234,9 @@ sbci r17, 0
 brcc C25F1       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -5246,9 +5246,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C35F2     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -5274,9 +5274,9 @@ sbci r17, 0
 brcc C25F11       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -5286,9 +5286,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C35F22     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -5314,9 +5314,9 @@ sbci r17, 0
 brcc C25F111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -5326,9 +5326,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C35F222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
@@ -5354,9 +5354,9 @@ sbci r17, 0
 brcc C25F1111       
 
 ; Set baud rate
-ldi r16,0 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,51 ; 19200 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,51 ; 19200 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
 ldi r16, 255      
@@ -5366,9 +5366,9 @@ subi r16, 1
 sbci r17, 0      
 brcc C35F2222     
 
-ldi r16,1 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,1 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1H,r16 
-ldi r16,162 ; 2400 for 16 104 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,160 ; 2400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR1L,r16
 
    ; Put data (r16) into buffer, sends the data
