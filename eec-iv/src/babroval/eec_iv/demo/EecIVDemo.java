@@ -15,7 +15,5 @@ public class EecIVDemo {
 				controller.initController();
 			}
 		});
-
 	}
-
 }
