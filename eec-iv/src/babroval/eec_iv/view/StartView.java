@@ -16,7 +16,7 @@ public class StartView extends JFrame{
 	private JLabel label;
 	
 	{
-		panel = new JPanel();
+		panel = new JPanel(null);
 		errors = new JButton("ERRORS");
 		koeo = new JButton("KOEO/ER");
 		data = new JButton("DATA");
@@ -24,6 +24,13 @@ public class StartView extends JFrame{
 		baud = new JCheckBox("19200");
 		label = new JLabel("_");
 		
+		errors.setBounds(20, 10, 160, 40);
+		koeo.setBounds(200, 10, 160, 40);
+		data.setBounds(380, 10, 160, 40);
+		disconnect.setBounds(680, 10, 160, 40);
+		baud.setBounds(860, 10, 160, 20);
+		label.setBounds(20, 120, 160, 20);
+			
 		panel.add(errors);
 		panel.add(koeo);
 		panel.add(data);
