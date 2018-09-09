@@ -25,8 +25,8 @@ public class StartController {
 							"Message", JOptionPane.INFORMATION_MESSAGE);
 
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(view.getPanel(),
-							"the connection has not been successfully established", "", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(view.getPanel(), "no interface connection", "",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
