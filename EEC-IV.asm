@@ -15,9 +15,9 @@ rjmp UART0_CMD ;go to label Receive_Complete
 
 USART0_Init:
   ; Set baud rate
-ldi r16,0 ; 50325 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,0 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts UBRR0H,r16 
-ldi r16,19 ; 50325 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
+ldi r16,25 ; 38400 for 16 000 000 Hz Asynch Mode:((fosc/16BAUD)-1)
 sts 0x29,r16  ;UBRR0L
   ; Enable receiver and transmitter
 ldi r16,(1<<RXCIE0)|(1<<RXEN0)|(1<<TXEN0)
