@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import babroval.eec_iv.view.StartView;
@@ -17,7 +18,7 @@ public class StartController extends Thread {
 
 	static SerialPort serialPort = new SerialPort("COM7");;
 
-	private StartView view = new StartView();
+	static StartView view = new StartView();
 
 	public StartController() {
 	}
@@ -43,7 +44,7 @@ public class StartController extends Thread {
 					Thread.sleep(500);
 					serialPort.writeByte((byte) 1);
 
-					JOptionPane.showMessageDialog(view.getPanel(), "The connection has been successfully established",
+					JOptionPane.showMessageDialog(view.getPanel(), "Interface is connected.",
 							"Message", JOptionPane.INFORMATION_MESSAGE);
 
 				} catch (Exception e) {
@@ -62,6 +63,12 @@ public class StartController extends Thread {
 				try {
 					String receivedData = serialPort.readHexString(event.getEventValue());
 					System.out.println("Received response: " + receivedData);
+					if(receivedData.equals("19 A1")) {
+						JOptionPane.showMessageDialog(view.getPanel(), "no connection with engine control unit (switch on the ignition)", "",
+						JOptionPane.ERROR_MESSAGE);
+					
+						serialPort.closePort();
+					}
 				} catch (SerialPortException ex) {
 					System.out.println("Error in receiving string from COM-port: " + ex);
 				}
