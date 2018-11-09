@@ -14,6 +14,7 @@ public class StartView extends JFrame{
 	private JButton errors, koeo, data, disconnect;
 	private JCheckBox baud;
 	private JLabel label;
+	private JLabel labelConnect;
 	
 	{
 		panel = new JPanel(null);
@@ -21,15 +22,17 @@ public class StartView extends JFrame{
 		koeo = new JButton("KOEO/ER");
 		data = new JButton("DATA");
 		disconnect = new JButton("Disconnect");
-		baud = new JCheckBox("19200");
-		label = new JLabel("_");
+		baud = new JCheckBox("19200 baud");
+		label = new JLabel("");
+		labelConnect = new JLabel("");
 		
 		errors.setBounds(20, 10, 160, 40);
 		koeo.setBounds(200, 10, 160, 40);
 		data.setBounds(380, 10, 160, 40);
 		disconnect.setBounds(680, 10, 160, 40);
 		baud.setBounds(860, 10, 160, 20);
-		label.setBounds(20, 120, 160, 20);
+		label.setBounds(20, 120, 500, 20);
+		labelConnect.setBounds(20, 500, 160, 20);
 			
 		panel.add(errors);
 		panel.add(koeo);
@@ -37,6 +40,7 @@ public class StartView extends JFrame{
 		panel.add(disconnect);
 		panel.add(baud);
 		panel.add(label);
+		panel.add(labelConnect);
 		add(panel);
 	}
 	
@@ -103,5 +107,13 @@ public class StartView extends JFrame{
 
 	public void setLabel(JLabel label) {
 		this.label = label;
+	}
+	
+	public JLabel getLabelConnect() {
+		return labelConnect;
+	}
+	
+	public void setLabelConnect(JLabel labelConnect) {
+		this.labelConnect = labelConnect;
 	}
 }
