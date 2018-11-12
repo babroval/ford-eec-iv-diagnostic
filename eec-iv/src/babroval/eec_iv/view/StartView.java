@@ -6,35 +6,35 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class StartView extends JFrame{
+public class StartView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	private JPanel panel;
-	private JButton errors, koeo, data, disconnect;
+	private JButton faults, koeo, data, disconnect;
 	private JCheckBox baud;
 	private JLabel label;
 	private JLabel labelConnect;
-	
+
 	{
 		panel = new JPanel(null);
-		errors = new JButton("ERRORS");
+		faults = new JButton("FAULTS");
 		koeo = new JButton("KOEO/ER");
 		data = new JButton("DATA");
 		disconnect = new JButton("Disconnect");
 		baud = new JCheckBox("19200 baud");
 		label = new JLabel("");
 		labelConnect = new JLabel("");
-		
-		errors.setBounds(20, 10, 160, 40);
+
+		faults.setBounds(20, 10, 160, 40);
 		koeo.setBounds(200, 10, 160, 40);
 		data.setBounds(380, 10, 160, 40);
 		disconnect.setBounds(680, 10, 160, 40);
 		baud.setBounds(860, 10, 160, 20);
-		label.setBounds(20, 120, 500, 20);
+		label.setBounds(20, 120, 800, 200);
 		labelConnect.setBounds(20, 500, 160, 20);
-			
-		panel.add(errors);
+
+		panel.add(faults);
 		panel.add(koeo);
 		panel.add(data);
 		panel.add(disconnect);
@@ -43,7 +43,7 @@ public class StartView extends JFrame{
 		panel.add(labelConnect);
 		add(panel);
 	}
-	
+
 	public StartView() {
 		setSize(995, 550);
 		setTitle("EEC-IV Diagnostic");
@@ -61,12 +61,12 @@ public class StartView extends JFrame{
 		this.panel = panel;
 	}
 
-	public JButton getErrors() {
-		return errors;
+	public JButton getFaults() {
+		return faults;
 	}
 
-	public void setErrors(JButton errors) {
-		this.errors = errors;
+	public void setFaults(JButton faults) {
+		this.faults = faults;
 	}
 
 	public JButton getKoeo() {
@@ -108,12 +108,13 @@ public class StartView extends JFrame{
 	public void setLabel(JLabel label) {
 		this.label = label;
 	}
-	
+
 	public JLabel getLabelConnect() {
 		return labelConnect;
 	}
-	
+
 	public void setLabelConnect(JLabel labelConnect) {
 		this.labelConnect = labelConnect;
 	}
+
 }
