@@ -2,7 +2,6 @@ package babroval.eec_iv.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,7 @@ public class StartController extends Thread {
 
 	private static List<String> allFaults = new ArrayList<String>();
 	private static List<String> faults = new ArrayList<String>();
+	private static Boolean timeOut = new Boolean(true);
 
 	{
 		allFaults = FileUtils.loadAllFaults(FILE_FAULTS_PATH);
@@ -57,6 +57,7 @@ public class StartController extends Thread {
 		view.getFaults().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
+
 				try {
 
 					serialPort.openPort();
@@ -67,21 +68,34 @@ public class StartController extends Thread {
 					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
 
 					Thread.sleep(1000);
-					if (view.getBaud().isSelected()) {
-						serialPort.writeByte((byte) 4);
-						Thread.sleep(500);
-					}
-					serialPort.writeByte((byte) 5);
-					Thread.sleep(500);
-					serialPort.writeByte((byte) 1);
 
 					view.getFaults().setEnabled(false);
 					view.getBaud().setEnabled(false);
 					view.getDisconnect().setEnabled(true);
 					view.getLabelConnect().setText("Interface is connected");
 
+					if (view.getBaud().isSelected()) {
+						serialPort.writeByte((byte) 4);
+					} else {
+						serialPort.writeByte((byte) 5);
+					}
+
+					Thread.sleep(500);
+
+					serialPort.writeByte((byte) 1);
+
+					Thread.sleep(12000);
+
+					if (timeOut.booleanValue()) {
+						JOptionPane.showMessageDialog(view.getPanel(),
+								"Switch the ignition OFF, reconnect diagnostic cable in the car, select checkbox '19200', switch the ignition ON and press 'FAULTS' button again",
+								"", JOptionPane.WARNING_MESSAGE);
+						serialPort.closePort();
+						resetFrame();
+					}
+
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(view.getPanel(), "no interface connection", "",
+					JOptionPane.showMessageDialog(view.getPanel(), "no interface connection, check USB wiring", "",
 							JOptionPane.ERROR_MESSAGE);
 					resetFrame();
 
@@ -96,12 +110,12 @@ public class StartController extends Thread {
 		public void serialEvent(SerialPortEvent event) {
 			if (event.isRXCHAR() && event.getEventValue() > 0) {
 				try {
-					
+					timeOut = Boolean.FALSE;
 					String receivedData = serialPort.readHexString(event.getEventValue());
-					
+					System.out.println(receivedData);
 					if (receivedData.equals("19 A1")) {
 						JOptionPane.showMessageDialog(view.getPanel(),
-								"There is no connection with the engine control unit (switch on the ignition)", "",
+								"There is no connection with the engine control unit (switch the ignition ON)", "",
 								JOptionPane.ERROR_MESSAGE);
 						serialPort.closePort();
 						resetFrame();
@@ -123,12 +137,15 @@ public class StartController extends Thread {
 	}
 
 	private static void resetFrame() {
+		faults.clear();
+		timeOut = Boolean.TRUE;
 		view.getFaults().setEnabled(true);
 		view.getBaud().setEnabled(true);
 		view.getKoeo().setEnabled(false);
 		view.getData().setEnabled(false);
 		view.getDisconnect().setEnabled(false);
 		view.getLabel().setText("");
-		view.getLabelConnect().setText("Interface is disconnected");
+		view.getLabelConnect().setText(
+				"The interface is disconnected. Connect the diagnostic cable in the car, switch the Ignition OFF then ON and press 'FAULTS' button");
 	}
 }

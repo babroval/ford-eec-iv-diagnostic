@@ -32,7 +32,7 @@ public class StartView extends JFrame {
 		disconnect.setBounds(680, 10, 160, 40);
 		baud.setBounds(860, 10, 160, 20);
 		label.setBounds(20, 120, 800, 200);
-		labelConnect.setBounds(20, 500, 160, 20);
+		labelConnect.setBounds(20, 500, 800, 20);
 
 		panel.add(faults);
 		panel.add(koeo);
