@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileUtils {
+public class FileUtil {
 
 	public static List<String> loadAllFaults(String filePath) {
 

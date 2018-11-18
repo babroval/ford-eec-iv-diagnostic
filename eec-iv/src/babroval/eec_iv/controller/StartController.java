@@ -4,10 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 
-import babroval.eec_iv.util.FileUtils;
+import babroval.eec_iv.util.FileUtil;
 import babroval.eec_iv.view.StartView;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
@@ -24,10 +26,10 @@ public class StartController extends Thread {
 
 	private static List<String> allFaults = new ArrayList<String>();
 	private static List<String> faults = new ArrayList<String>();
-	private static Boolean timeOut = new Boolean(true);
+	private static Boolean timeOut = new Boolean(false);
 
 	{
-		allFaults = FileUtils.loadAllFaults(FILE_FAULTS_PATH);
+		allFaults = FileUtil.loadAllFaults(FILE_FAULTS_PATH);
 	}
 
 	public StartController() {
@@ -60,6 +62,8 @@ public class StartController extends Thread {
 
 				try {
 
+					timeOut = Boolean.TRUE;
+
 					serialPort.openPort();
 
 					serialPort.setParams(SerialPort.BAUDRATE_38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_2,
@@ -84,15 +88,31 @@ public class StartController extends Thread {
 
 					serialPort.writeByte((byte) 1);
 
-					Thread.sleep(12000);
+					Timer timer = new Timer();
+					timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							if (timeOut.booleanValue()) {
+								if (!view.getBaud().isSelected()) {
+									JOptionPane.showMessageDialog(view.getPanel(),
+											"Switch the ignition OFF, reconnect diagnostic cable in the car, select checkbox 'Second type', switch the ignition ON and press 'FAULTS' button again",
+											"", JOptionPane.WARNING_MESSAGE);
+								} else {
+									JOptionPane.showMessageDialog(view.getPanel(),
+											"Switch the ignition OFF, reconnect diagnostic cable in the car, deselect checkbox 'Second type', switch the ignition ON and press 'FAULTS' button again",
+											"", JOptionPane.WARNING_MESSAGE);
+								}
+								try {
+									serialPort.closePort();
+								} catch (SerialPortException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								resetFrame();
+							}
 
-					if (timeOut.booleanValue()) {
-						JOptionPane.showMessageDialog(view.getPanel(),
-								"Switch the ignition OFF, reconnect diagnostic cable in the car, select checkbox '19200', switch the ignition ON and press 'FAULTS' button again",
-								"", JOptionPane.WARNING_MESSAGE);
-						serialPort.closePort();
-						resetFrame();
-					}
+						}
+					}, 15000);
 
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(view.getPanel(), "no interface connection, check USB wiring", "",
@@ -138,14 +158,12 @@ public class StartController extends Thread {
 
 	private static void resetFrame() {
 		faults.clear();
-		timeOut = Boolean.TRUE;
-		view.getFaults().setEnabled(true);
 		view.getBaud().setEnabled(true);
+		view.getFaults().setEnabled(true);
 		view.getKoeo().setEnabled(false);
 		view.getData().setEnabled(false);
 		view.getDisconnect().setEnabled(false);
 		view.getLabel().setText("");
-		view.getLabelConnect().setText(
-				"The interface is disconnected. Connect the diagnostic cable in the car, switch the Ignition OFF then ON and press 'FAULTS' button");
+		view.getLabelConnect().setText("The interface is disconnected.");
 	}
 }

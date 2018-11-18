@@ -22,7 +22,7 @@ public class StartView extends JFrame {
 		koeo = new JButton("KOEO/ER");
 		data = new JButton("DATA");
 		disconnect = new JButton("Disconnect");
-		baud = new JCheckBox("19200 baud");
+		baud = new JCheckBox("Second type");
 		label = new JLabel("");
 		labelConnect = new JLabel("");
 
