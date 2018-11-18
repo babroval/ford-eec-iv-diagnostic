@@ -29,6 +29,7 @@ public class StartController extends Thread {
 	private static Boolean timeOut = new Boolean(false);
 
 	{
+		resetFrame();
 		allFaults = FileUtil.loadAllFaults(FILE_FAULTS_PATH);
 	}
 
@@ -37,22 +38,11 @@ public class StartController extends Thread {
 
 	public void initController() {
 
-		resetFrame();
 		view.getDisconnect().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-
-					serialPort.closePort();
-					resetFrame();
-
-				} catch (SerialPortException ex) {
-					JOptionPane.showMessageDialog(view.getPanel(), "port closing failed", "",
-							JOptionPane.ERROR_MESSAGE);
-					view.dispose();
-				}
-
+				resetFrame();
 			}
 		});
 
@@ -65,17 +55,14 @@ public class StartController extends Thread {
 					timeOut = Boolean.TRUE;
 
 					serialPort.openPort();
-
 					serialPort.setParams(SerialPort.BAUDRATE_38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_2,
 							SerialPort.PARITY_NONE);
-
 					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
-
 					Thread.sleep(1000);
 
 					view.getFaults().setEnabled(false);
 					view.getBaud().setEnabled(false);
-					view.getDisconnect().setEnabled(true);
+					view.getDisconnect().setEnabled(false);
 					view.getLabelConnect().setText("Interface is connected");
 
 					if (view.getBaud().isSelected()) {
@@ -83,7 +70,6 @@ public class StartController extends Thread {
 					} else {
 						serialPort.writeByte((byte) 5);
 					}
-
 					Thread.sleep(500);
 
 					serialPort.writeByte((byte) 1);
@@ -92,33 +78,87 @@ public class StartController extends Thread {
 					timer.schedule(new TimerTask() {
 						@Override
 						public void run() {
-							if (timeOut.booleanValue()) {
-								if (!view.getBaud().isSelected()) {
-									JOptionPane.showMessageDialog(view.getPanel(),
-											"Switch the ignition OFF, reconnect diagnostic cable in the car, select checkbox 'Second type', switch the ignition ON and press 'FAULTS' button again",
-											"", JOptionPane.WARNING_MESSAGE);
+
+							try {
+								serialPort.closePort();
+
+								if (timeOut.booleanValue()) {
+									resetFrame();
+									if (!view.getBaud().isSelected()) {
+										JOptionPane.showMessageDialog(view.getPanel(),
+												"Switch the ignition OFF, reconnect diagnostic cable in the car, select checkbox 'other ECU', switch the ignition ON and press 'FAULTS' button again",
+												"", JOptionPane.WARNING_MESSAGE);
+									} else {
+										JOptionPane.showMessageDialog(view.getPanel(),
+												"Switch the ignition OFF, reconnect diagnostic cable in the car, deselect checkbox 'other ECU', switch the ignition ON and press 'FAULTS' button again",
+												"", JOptionPane.WARNING_MESSAGE);
+									}
 								} else {
-									JOptionPane.showMessageDialog(view.getPanel(),
-											"Switch the ignition OFF, reconnect diagnostic cable in the car, deselect checkbox 'Second type', switch the ignition ON and press 'FAULTS' button again",
-											"", JOptionPane.WARNING_MESSAGE);
+									view.getLabel().setVisible(true);
+									view.getFaults().setEnabled(false);
+									view.getKoeo().setEnabled(true);
+									view.getDisconnect().setEnabled(true);
 								}
-								try {
-									serialPort.closePort();
-								} catch (SerialPortException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
+							} catch (SerialPortException e) {
 								resetFrame();
 							}
-
 						}
-					}, 15000);
+					}, 30000);
 
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(view.getPanel(), "no interface connection, check USB wiring", "",
-							JOptionPane.ERROR_MESSAGE);
 					resetFrame();
+					JOptionPane.showMessageDialog(view.getPanel(), "COM-port connection fault (check USB wiring)", "",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 
+		view.getKoeo().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+
+				try {
+					serialPort.openPort();
+					serialPort.setParams(SerialPort.BAUDRATE_38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_2,
+							SerialPort.PARITY_NONE);
+					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
+					Thread.sleep(1000);
+
+					faults.clear();
+					view.getLabel().setVisible(false);
+					view.getKoeo().setEnabled(false);
+					view.getDisconnect().setEnabled(false);
+
+					if (view.getBaud().isSelected()) {
+						serialPort.writeByte((byte) 4);
+					} else {
+						serialPort.writeByte((byte) 5);
+					}
+					Thread.sleep(500);
+
+					serialPort.writeByte((byte) 2);
+
+					Timer timer = new Timer();
+					timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							try {
+								serialPort.closePort();
+
+								view.getLabel().setVisible(true);
+								view.getData().setEnabled(true);
+								view.getDisconnect().setEnabled(true);
+
+							} catch (SerialPortException e) {
+								resetFrame();
+							}
+						}
+					}, 30000);
+
+				} catch (Exception e) {
+					resetFrame();
+					JOptionPane.showMessageDialog(view.getPanel(), "COM-port connection fault (check USB wiring)",
+							"", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -133,12 +173,12 @@ public class StartController extends Thread {
 					timeOut = Boolean.FALSE;
 					String receivedData = serialPort.readHexString(event.getEventValue());
 					System.out.println(receivedData);
+
 					if (receivedData.equals("19 A1")) {
+						resetFrame();
 						JOptionPane.showMessageDialog(view.getPanel(),
 								"There is no connection with the engine control unit (switch the ignition ON)", "",
 								JOptionPane.ERROR_MESSAGE);
-						serialPort.closePort();
-						resetFrame();
 					} else {
 						Integer i = Integer.valueOf(receivedData.substring(4, 5) + receivedData.substring(0, 2));
 						faults.add(allFaults.get(i - 1));
@@ -150,20 +190,33 @@ public class StartController extends Thread {
 						view.getLabel().setText(s);
 					}
 				} catch (SerialPortException ex) {
-					System.out.println("Error in receiving string from COM-port: " + ex);
+					System.out.println("Unable to receive string from COM-port: " + ex);
 				}
 			}
 		}
 	}
 
 	private static void resetFrame() {
+		try {
+			if (serialPort.isOpened()) {
+				serialPort.closePort();
+			}
+		} catch (SerialPortException e) {
+			view.dispose();
+			JOptionPane.showMessageDialog(view.getPanel(),
+					"COM-port connection fault (check USB wiring and restart application)", "",
+					JOptionPane.ERROR_MESSAGE);
+			
+			System.exit(1);
+		}
 		faults.clear();
 		view.getBaud().setEnabled(true);
 		view.getFaults().setEnabled(true);
 		view.getKoeo().setEnabled(false);
 		view.getData().setEnabled(false);
 		view.getDisconnect().setEnabled(false);
-		view.getLabel().setText("");
-		view.getLabelConnect().setText("The interface is disconnected.");
+		view.getLabel().setVisible(false);
+		view.getLabelConnect().setText("Interface is disconnected.");
+		
 	}
 }
