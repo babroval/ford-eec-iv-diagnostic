@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 
+import babroval.eec_iv.util.ConnectionPool;
 import babroval.eec_iv.util.FileUtil;
 import babroval.eec_iv.view.StartView;
 import jssc.SerialPort;
@@ -19,15 +20,18 @@ import jssc.SerialPortException;
 public class StartController extends Thread {
 
 	private static final String FILE_FAULTS_PATH = "EECIVFaults.txt";
+	private static SerialPort serialPort;
+	public static StartView view = new StartView();
 
-	private static SerialPort serialPort = new SerialPort("COM7");;
-
-	private static StartView view = new StartView();
-
-	private static List<String> allFaults = new ArrayList<String>();
+	private static List<String> allFaults;
 	private static List<String> faults = new ArrayList<String>();
 
 	{
+		try {
+			serialPort = ConnectionPool.getPool().getConnection();
+		} catch (Exception e) {
+			resetFrame();
+		}
 		resetFrame();
 		allFaults = FileUtil.loadAllFaults(FILE_FAULTS_PATH);
 	}
@@ -50,15 +54,14 @@ public class StartController extends Thread {
 			public void actionPerformed(ActionEvent ae) {
 
 				try {
+
 					faults.add("ECU faults:");
 					view.getFaults().setEnabled(false);
 					view.getBaud().setEnabled(false);
 					view.getDisconnect().setEnabled(false);
 					view.getLabelConnect().setText("Reading ECU faults...");
 
-					serialPort.openPort();
-					serialPort.setParams(SerialPort.BAUDRATE_38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_2,
-							SerialPort.PARITY_NONE);
+					serialPort = ConnectionPool.getPool().getConnection();
 					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
 					Thread.sleep(1000);
 
@@ -124,9 +127,7 @@ public class StartController extends Thread {
 					view.getDisconnect().setEnabled(false);
 					view.getLabelConnect().setText("Connection established. Performing KOEO test...");
 
-					serialPort.openPort();
-					serialPort.setParams(SerialPort.BAUDRATE_38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_2,
-							SerialPort.PARITY_NONE);
+					serialPort = ConnectionPool.getPool().getConnection();
 					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
 					Thread.sleep(1000);
 
@@ -184,9 +185,7 @@ public class StartController extends Thread {
 					view.getDisconnect().setEnabled(false);
 					view.getLabelConnect().setText("Connection established. Performing KOER test...");
 
-					serialPort.openPort();
-					serialPort.setParams(SerialPort.BAUDRATE_38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_2,
-							SerialPort.PARITY_NONE);
+					serialPort = ConnectionPool.getPool().getConnection();
 					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
 					Thread.sleep(1000);
 
@@ -209,8 +208,8 @@ public class StartController extends Thread {
 								if (view.getLabel().getText().equals("")) {
 									resetFrame();
 									JOptionPane.showMessageDialog(view.getPanel(),
-											"ECU connection fault (check the wiring and switch the ignition ON)",
-											"", JOptionPane.ERROR_MESSAGE);
+											"ECU connection fault (check the wiring and switch the ignition ON)", "",
+											JOptionPane.ERROR_MESSAGE);
 								} else {
 									view.getLabel().setVisible(true);
 									view.getData().setEnabled(true);
@@ -234,44 +233,13 @@ public class StartController extends Thread {
 		});
 	}
 
-	private static class PortReader implements SerialPortEventListener {
-
-		@Override
-		public void serialEvent(SerialPortEvent event) {
-			if (event.isRXCHAR() && event.getEventValue() > 0) {
-				try {
-					String receivedData = serialPort.readHexString(event.getEventValue());
-					System.out.println(receivedData);
-					if (receivedData.equals("19 A1")) {
-						resetFrame();
-						JOptionPane.showMessageDialog(view.getPanel(),
-								"ECU connection fault (check the wiring and switch the ignition ON)",
-								"", JOptionPane.ERROR_MESSAGE);
-					} else {
-						Integer i = Integer.valueOf(receivedData.substring(4, 5) + receivedData.substring(0, 2));
-						faults.add(allFaults.get(i - 1));
-
-						String s = "<html>";
-						for (String fault : faults) {
-							s = s + fault + "<br>";
-						}
-						view.getLabel().setText(s);
-					}
-				} catch (Exception e) {
-					resetFrame();
-					JOptionPane.showMessageDialog(view.getPanel(), "COM-port fault (check connection)", "",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		}
-	}
-
 	private static void resetFrame() {
+
 		try {
 			if (serialPort.isOpened()) {
 				serialPort.closePort();
 			}
-		} catch (SerialPortException e) {
+		} catch (Exception e) {
 			view.dispose();
 			JOptionPane.showMessageDialog(view.getPanel(),
 					"COM-port connection fault (check USB wiring and restart application)", "",
@@ -290,5 +258,37 @@ public class StartController extends Thread {
 		view.getLabel().setVisible(false);
 		view.getLabelConnect().setText("Connect scanner, switch the ignition ON and press button 'FAULTS'");
 
+	}
+
+	private static class PortReader implements SerialPortEventListener {
+
+		@Override
+		public void serialEvent(SerialPortEvent event) {
+			if (event.isRXCHAR() && event.getEventValue() > 0) {
+				try {
+					String receivedData = serialPort.readHexString(event.getEventValue());
+					System.out.println(receivedData);
+					if (receivedData.equals("19 A1")) {
+						resetFrame();
+						JOptionPane.showMessageDialog(view.getPanel(),
+								"ECU connection fault (check the wiring and switch the ignition ON)", "",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						Integer i = Integer.valueOf(receivedData.substring(4, 5) + receivedData.substring(0, 2));
+						faults.add(allFaults.get(i - 1));
+
+						String s = "<html>";
+						for (String fault : faults) {
+							s = s + fault + "<br>";
+						}
+						view.getLabel().setText(s);
+					}
+				} catch (Exception e) {
+					resetFrame();
+					JOptionPane.showMessageDialog(view.getPanel(), "COM-port fault (check connection)", "",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
 	}
 }
