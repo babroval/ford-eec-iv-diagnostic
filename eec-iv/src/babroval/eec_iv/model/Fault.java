@@ -3,9 +3,9 @@ package babroval.eec_iv.model;
 public class Fault {
 
 	private Integer fault_id = 0;
-	private String fault_number = "";
+	private String number = "";
 	private String info = "";
-	
+
 	public Fault() {
 	}
 
@@ -13,19 +13,19 @@ public class Fault {
 		this.fault_id = fault_id;
 	}
 
-	public Fault(Integer fault_id, String fault_number) {
+	public Fault(Integer fault_id, String number) {
 		this.fault_id = fault_id;
-		this.fault_number = fault_number;
+		this.number = number;
 	}
 
-	public Fault(String fault_number, String info) {
-		this.fault_number = fault_number;
+	public Fault(String number, String info) {
+		this.number = number;
 		this.info = info;
 	}
 
-	public Fault(Integer fault_id, String fault_number, String info) {
+	public Fault(Integer fault_id, String number, String info) {
 		this.fault_id = fault_id;
-		this.fault_number = fault_number;
+		this.number = number;
 		this.info = info;
 	}
 
@@ -37,12 +37,12 @@ public class Fault {
 		this.fault_id = fault_id;
 	}
 
-	public String getFault_number() {
-		return fault_number;
+	public String getNumber() {
+		return number;
 	}
 
-	public void setFault_number(String fault_number) {
-		this.fault_number = fault_number;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 	public String getInfo() {
@@ -58,8 +58,8 @@ public class Fault {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((fault_id == null) ? 0 : fault_id.hashCode());
-		result = prime * result + ((fault_number == null) ? 0 : fault_number.hashCode());
 		result = prime * result + ((info == null) ? 0 : info.hashCode());
+		result = prime * result + ((number == null) ? 0 : number.hashCode());
 		return result;
 	}
 
@@ -77,22 +77,22 @@ public class Fault {
 				return false;
 		} else if (!fault_id.equals(other.fault_id))
 			return false;
-		if (fault_number == null) {
-			if (other.fault_number != null)
-				return false;
-		} else if (!fault_number.equals(other.fault_number))
-			return false;
 		if (info == null) {
 			if (other.info != null)
 				return false;
 		} else if (!info.equals(other.info))
+			return false;
+		if (number == null) {
+			if (other.number != null)
+				return false;
+		} else if (!number.equals(other.number))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Fault [fault_id=" + fault_id + ", fault_number=" + fault_number + ", info=" + info + "]";
+		return "Fault [fault_id=" + fault_id + ", number=" + number + ", info=" + info + "]";
 	}
-	
+
 }

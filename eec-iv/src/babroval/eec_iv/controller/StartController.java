@@ -9,8 +9,10 @@ import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 
+import babroval.eec_iv.model.Fault;
+import babroval.eec_iv.service.FaultServiceImpl;
+import babroval.eec_iv.service.Service;
 import babroval.eec_iv.util.ConnectionPool;
-import babroval.eec_iv.util.FileUtil;
 import babroval.eec_iv.view.StartView;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
@@ -19,12 +21,14 @@ import jssc.SerialPortException;
 
 public class StartController extends Thread {
 
-	private static final String FILE_FAULTS_PATH = "EECIVFaults.txt";
+	private static final String FILE_FAULTS_PATH = "EECIVFaults.csv";
 	private static SerialPort serialPort;
 	public static StartView view = new StartView();
 
-	private static List<String> allFaults;
-	private static List<String> faults = new ArrayList<String>();
+	private static List<Fault> allFaults = new ArrayList<>();;
+	private static List<String> faults = new ArrayList<>();
+
+	private Service<Fault> faultService = new FaultServiceImpl<>();
 
 	{
 		try {
@@ -33,7 +37,14 @@ public class StartController extends Thread {
 			resetFrame();
 		}
 		resetFrame();
-		allFaults = FileUtil.loadAllFaults(FILE_FAULTS_PATH);
+
+		try {
+			allFaults = faultService.getAllFaults(FILE_FAULTS_PATH);
+		} catch (Exception e) {
+			resetFrame();
+			JOptionPane.showMessageDialog(view.getPanel(), "CSV file reading fault", "", JOptionPane.ERROR_MESSAGE);
+		}
+
 	}
 
 	public StartController() {
@@ -274,14 +285,19 @@ public class StartController extends Thread {
 								"ECU connection fault (check the wiring and switch the ignition ON)", "",
 								JOptionPane.ERROR_MESSAGE);
 					} else {
-						Integer i = Integer.valueOf(receivedData.substring(4, 5) + receivedData.substring(0, 2));
-						faults.add(allFaults.get(i - 1));
+						String faultNumber = receivedData.substring(4, 5) + receivedData.substring(0, 2);
 
-						String s = "<html>";
-						for (String fault : faults) {
-							s = s + fault + "<br>";
+						for (Fault fault : allFaults) {
+							if (faultNumber.equals(fault.getNumber())) {
+								faults.add(faultNumber + "  " + fault.getInfo());
+							}
 						}
-						view.getLabel().setText(s);
+
+						String str = "<html>";
+						for (String fault : faults) {
+							str = str + fault + "<br>";
+						}
+						view.getLabel().setText(str);
 					}
 				} catch (Exception e) {
 					resetFrame();
@@ -291,4 +307,5 @@ public class StartController extends Thread {
 			}
 		}
 	}
+	
 }
