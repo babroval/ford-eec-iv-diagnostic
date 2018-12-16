@@ -32,7 +32,7 @@ public class StartController extends Thread {
 
 	{
 		try {
-			serialPort = ConnectionPool.getPool().getConnection();
+			serialPort = ConnectionPool.getPool().getPort();
 		} catch (Exception e) {
 			resetFrame();
 		}
@@ -307,5 +307,5 @@ public class StartController extends Thread {
 			}
 		}
 	}
-	
+
 }
