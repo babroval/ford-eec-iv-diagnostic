@@ -29,17 +29,20 @@ public final class ConnectionPool {
 			for (int i = 0; i < portNames.length; i++) {
 
 				portName = portNames[i];
+				System.out.println(portName);
 				serialPort = new SerialPort(portName);
 				serialPort.openPort();
 
 				serialPort.setParams(SerialPort.BAUDRATE_38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_2,
 						SerialPort.PARITY_NONE);
 				serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
-				serialPort.writeByte((byte) 14);
+				Thread.sleep(100);
+				serialPort.writeByte((byte) 7);
 				Thread.sleep(100);
 				if (isPortDetected) {
 					return serialPort;
 				}
+				serialPort.closePort();
 			}
 			throw new RuntimeException();
 
@@ -69,7 +72,9 @@ public final class ConnectionPool {
 			if (event.isRXCHAR() && event.getEventValue() > 0) {
 				try {
 					String receivedData = serialPort.readHexString(event.getEventValue());
-					if (receivedData.equals("0E")) {
+					System.out.println(receivedData);
+					if (receivedData.equals("0C 0C")) {
+						serialPort.writeByte((byte) 0);
 						isPortDetected = true;
 					}
 				} catch (Exception e) {

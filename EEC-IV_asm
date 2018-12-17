@@ -1382,8 +1382,18 @@ rjmp USART_Go
 USART_Data0:
 ldi r18,3 ; $03
 cpse r18,r21 ;Skip the next line if $03
-rjmp Idle
+rjmp USART_Detect
 rjmp USART_Go
+
+USART_Detect:
+ldi r18,7 ; $07
+cpse r18,r21 ;Skip the next line if $07
+rjmp Idle
+ldi r17,12
+sts 0x2C,r17   ;send usart0 Connection OK
+sts 0x2C,r17   ;send usart0 Connection OK
+ldi r21,0      ;reset usart0
+rjmp Idle
 
 
 
