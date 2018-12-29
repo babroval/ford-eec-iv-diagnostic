@@ -31,8 +31,11 @@ public final class ConnectionPool {
 				portName = portNames[i];
 				System.out.println(portName);
 				serialPort = new SerialPort(portName);
-				serialPort.openPort();
-
+				try {
+					serialPort.openPort();
+				} catch (Exception e) {
+					continue;
+				}
 				serialPort.setParams(SerialPort.BAUDRATE_38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_2,
 						SerialPort.PARITY_NONE);
 				serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
