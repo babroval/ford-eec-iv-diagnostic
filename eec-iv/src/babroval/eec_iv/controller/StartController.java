@@ -25,8 +25,10 @@ public class StartController extends Thread {
 	private static SerialPort serialPort;
 	public static StartView view = new StartView();
 
+	private static int g = 0;
 	private static List<Fault> allFaults = new ArrayList<>();;
 	private static List<String> faults = new ArrayList<>();
+	private static StringBuffer buffer = new StringBuffer("");
 
 	private Service<Fault> faultService = new FaultServiceImpl<>();
 
@@ -65,12 +67,12 @@ public class StartController extends Thread {
 			public void actionPerformed(ActionEvent ae) {
 
 				try {
-
+					faults.clear();
 					faults.add("ECU faults:");
 					view.getFaults().setEnabled(false);
 					view.getBaud().setEnabled(false);
 					view.getDisconnect().setEnabled(false);
-					view.getLabelConnect().setText("Reading ECU faults...");
+					view.getLabelConnect().setText("Connection established. Reading ECU faults...");
 
 					serialPort = ConnectionPool.getPool().getConnection();
 					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
@@ -222,7 +224,6 @@ public class StartController extends Thread {
 											"ECU connection fault (check the wiring and switch the ignition ON)", "",
 											JOptionPane.ERROR_MESSAGE);
 								} else {
-									view.getLabel().setVisible(true);
 									view.getData().setEnabled(true);
 									view.getDisconnect().setEnabled(true);
 									view.getLabel().setVisible(true);
@@ -234,6 +235,64 @@ public class StartController extends Thread {
 							}
 						}
 					}, 30000);
+
+				} catch (Exception e) {
+					resetFrame();
+					JOptionPane.showMessageDialog(view.getPanel(), "COM-port connection fault (check USB wiring)", "",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		view.getData().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+
+				try {
+					faults.clear();
+					buffer.setLength(0);
+					view.getLabel().setText("Live Data:");
+					view.getLabel().setVisible(false);
+					view.getFaults().setEnabled(false);
+					view.getData().setEnabled(false);
+					view.getDisconnect().setEnabled(false);
+					view.getDataListParamNames().setVisible(false);
+					view.getDataList().setVisible(false);
+					view.getLabelConnect().setText("Connection established. Waiting for ECU live data...");
+
+					serialPort = ConnectionPool.getPool().getConnection();
+					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
+					Thread.sleep(1000);
+
+					if (view.getBaud().isSelected()) {
+						serialPort.writeByte((byte) 4);
+					} else {
+						serialPort.writeByte((byte) 5);
+					}
+					Thread.sleep(500);
+
+					serialPort.writeByte((byte) 3);
+
+					Timer timer = new Timer();
+					timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+
+							if (0 == view.getDataList().getModel().getSize()) {
+								resetFrame();
+								JOptionPane.showMessageDialog(view.getPanel(),
+										"ECU connection fault (check the wiring and switch the ignition ON)", "",
+										JOptionPane.ERROR_MESSAGE);
+							} else {
+								view.getDisconnect().setEnabled(true);
+								view.getLabel().setVisible(true);
+								view.getDataListParamNames().setVisible(true);
+								view.getDataList().setVisible(true);
+								view.getLabelConnect().setText("Connection established. Reading ECU live data...");
+							}
+
+						}
+					}, 20000);
 
 				} catch (Exception e) {
 					resetFrame();
@@ -259,14 +318,17 @@ public class StartController extends Thread {
 			System.exit(1);
 		}
 		faults.clear();
+		buffer.setLength(0);
 		view.getBaud().setEnabled(true);
 		view.getFaults().setEnabled(true);
 		view.getKoeo().setEnabled(false);
 		view.getKoer().setEnabled(false);
-		view.getData().setEnabled(false);
+		view.getData().setEnabled(true);
 		view.getDisconnect().setEnabled(false);
 		view.getLabel().setText("");
 		view.getLabel().setVisible(false);
+		view.getDataListParamNames().setVisible(false);
+		view.getDataList().setVisible(false);
 		view.getLabelConnect().setText("Connect scanner, switch the ignition ON and press button 'FAULTS'");
 
 	}
@@ -278,26 +340,35 @@ public class StartController extends Thread {
 			if (event.isRXCHAR() && event.getEventValue() > 0) {
 				try {
 					String receivedData = serialPort.readHexString(event.getEventValue());
-					System.out.println(receivedData);
+					 System.out.println(receivedData);
 					if (receivedData.equals("19 A1")) {
 						resetFrame();
 						JOptionPane.showMessageDialog(view.getPanel(),
 								"ECU connection fault (check the wiring and switch the ignition ON)", "",
 								JOptionPane.ERROR_MESSAGE);
-					} else {
-						String faultNumber = receivedData.substring(4, 5) + receivedData.substring(0, 2);
+					} else if (faults.isEmpty()) {
+						buffer.append(receivedData.replaceAll("\\s", ""));
 
-						for (Fault fault : allFaults) {
-							if (faultNumber.equals(fault.getNumber())) {
-								faults.add(faultNumber + "  " + fault.getInfo());
+						if (64 == buffer.length()) {
+							for (int i = 0, j = 0; j < buffer.length() - 4; i++, j = j + 4, g++) {
+								view.getModel().add(i, buffer.substring(j, j + 4)+","+g);
 							}
-						}
+							buffer.setLength(0);
+						} else {
+							String faultNumber = receivedData.substring(4, 5) + receivedData.substring(0, 2);
 
-						String str = "<html>";
-						for (String fault : faults) {
-							str = str + fault + "<br>";
+							for (Fault fault : allFaults) {
+								if (faultNumber.equals(fault.getNumber())) {
+									faults.add(faultNumber + "  " + fault.getInfo());
+								}
+							}
+
+							String str = "<html>";
+							for (String fault : faults) {
+								str = str + fault + "<br>";
+							}
+							view.getLabel().setText(str);
 						}
-						view.getLabel().setText(str);
 					}
 				} catch (Exception e) {
 					resetFrame();
