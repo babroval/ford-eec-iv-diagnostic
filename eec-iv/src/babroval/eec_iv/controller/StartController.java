@@ -10,7 +10,9 @@ import java.util.TimerTask;
 import javax.swing.JOptionPane;
 
 import babroval.eec_iv.model.Fault;
+import babroval.eec_iv.model.Parameter;
 import babroval.eec_iv.service.FaultServiceImpl;
+import babroval.eec_iv.service.ParameterServiceImpl;
 import babroval.eec_iv.service.Service;
 import babroval.eec_iv.util.ConnectionPool;
 import babroval.eec_iv.view.StartView;
@@ -22,14 +24,16 @@ import jssc.SerialPortException;
 public class StartController extends Thread {
 
 	private static final String FILE_FAULTS_PATH = "EECIVFaults.csv";
+	private static final String FILE_PARAMETERS_PATH = "EECIVParameters.csv";
 	private static SerialPort serialPort;
 	public static StartView view = new StartView();
 
-	private static int g = 0;
-	private static List<Fault> allFaults = new ArrayList<>();;
+	private static List<Parameter> allParameters = new ArrayList<>();
+	private static List<Fault> allFaults = new ArrayList<>();
 	private static List<String> faults = new ArrayList<>();
-	private static StringBuffer buffer = new StringBuffer("");
+	private static StringBuffer data = new StringBuffer("");
 
+	private static Service<Parameter> parameterService = new ParameterServiceImpl<>();
 	private Service<Fault> faultService = new FaultServiceImpl<>();
 
 	{
@@ -250,13 +254,12 @@ public class StartController extends Thread {
 
 				try {
 					faults.clear();
-					buffer.setLength(0);
+					data.setLength(0);
 					view.getLabel().setText("Live Data:");
 					view.getLabel().setVisible(false);
 					view.getFaults().setEnabled(false);
 					view.getData().setEnabled(false);
 					view.getDisconnect().setEnabled(false);
-					view.getDataListParamNames().setVisible(false);
 					view.getDataList().setVisible(false);
 					view.getLabelConnect().setText("Connection established. Waiting for ECU live data...");
 
@@ -286,7 +289,6 @@ public class StartController extends Thread {
 							} else {
 								view.getDisconnect().setEnabled(true);
 								view.getLabel().setVisible(true);
-								view.getDataListParamNames().setVisible(true);
 								view.getDataList().setVisible(true);
 								view.getLabelConnect().setText("Connection established. Reading ECU live data...");
 							}
@@ -318,7 +320,7 @@ public class StartController extends Thread {
 			System.exit(1);
 		}
 		faults.clear();
-		buffer.setLength(0);
+		data.setLength(0);
 		view.getBaud().setEnabled(true);
 		view.getFaults().setEnabled(true);
 		view.getKoeo().setEnabled(false);
@@ -327,7 +329,6 @@ public class StartController extends Thread {
 		view.getDisconnect().setEnabled(false);
 		view.getLabel().setText("");
 		view.getLabel().setVisible(false);
-		view.getDataListParamNames().setVisible(false);
 		view.getDataList().setVisible(false);
 		view.getLabelConnect().setText("Connect scanner, switch the ignition ON and press button 'FAULTS'");
 
@@ -340,35 +341,37 @@ public class StartController extends Thread {
 			if (event.isRXCHAR() && event.getEventValue() > 0) {
 				try {
 					String receivedData = serialPort.readHexString(event.getEventValue());
-					 System.out.println(receivedData);
+					System.out.println(receivedData);
 					if (receivedData.equals("19 A1")) {
 						resetFrame();
 						JOptionPane.showMessageDialog(view.getPanel(),
 								"ECU connection fault (check the wiring and switch the ignition ON)", "",
 								JOptionPane.ERROR_MESSAGE);
 					} else if (faults.isEmpty()) {
-						buffer.append(receivedData.replaceAll("\\s", ""));
+						data.append(receivedData.replaceAll("\\s", ""));
 
-						if (64 == buffer.length()) {
-							for (int i = 0, j = 0; j < buffer.length() - 4; i++, j = j + 4, g++) {
-								view.getModel().add(i, buffer.substring(j, j + 4)+","+g);
+						if (64 == data.length()) {
+							allParameters = parameterService.getAllParameters(FILE_PARAMETERS_PATH, data);
+							for (Parameter parameter : allParameters) {
+								view.getModelParam().add(parameter.getParameter_id() - 1,
+										parameter.getName() + parameter.getValue());
 							}
-							buffer.setLength(0);
-						} else {
-							String faultNumber = receivedData.substring(4, 5) + receivedData.substring(0, 2);
-
-							for (Fault fault : allFaults) {
-								if (faultNumber.equals(fault.getNumber())) {
-									faults.add(faultNumber + "  " + fault.getInfo());
-								}
-							}
-
-							String str = "<html>";
-							for (String fault : faults) {
-								str = str + fault + "<br>";
-							}
-							view.getLabel().setText(str);
+							data.setLength(0);
 						}
+					} else {
+						String faultNumber = receivedData.substring(4, 5) + receivedData.substring(0, 2);
+
+						for (Fault fault : allFaults) {
+							if (faultNumber.equals(fault.getNumber())) {
+								faults.add(faultNumber + "  " + fault.getInfo());
+							}
+						}
+
+						String str = "<html>";
+						for (String fault : faults) {
+							str = str + fault + "<br>";
+						}
+						view.getLabel().setText(str);
 					}
 				} catch (Exception e) {
 					resetFrame();

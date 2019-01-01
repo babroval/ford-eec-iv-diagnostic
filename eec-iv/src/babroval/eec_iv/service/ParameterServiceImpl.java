@@ -3,12 +3,12 @@ package babroval.eec_iv.service;
 import java.util.List;
 
 import babroval.eec_iv.dao.Dao;
-import babroval.eec_iv.dao.FaultDaoImpl;
+import babroval.eec_iv.dao.ParameterDaoImpl;
 
-public class FaultServiceImpl<T> implements Service<T> {
-
+public class ParameterServiceImpl<T> implements Service<T> {
+	
 	@SuppressWarnings("unchecked")
-	private Dao<T> dao = (Dao<T>) new FaultDaoImpl();
+	private Dao<T> dao = (Dao<T>) new ParameterDaoImpl();
 
 	@Override
 	public List<T> getAllFaults(String csvFilePath) {

@@ -11,33 +11,14 @@ import javax.swing.JPanel;
 public class StartView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private static final String[] PARAM_NAMES = {
-			"Engine speed (RPM)...................................................................",
-			"Heated oxygen sensor (mV)............................................................",
-			"Fuel correction (%)..................................................................",
-			"Heated oxygen sensor circuit mode....................................................",
-			"Air flow meter (mV)..................................................................",
-			"Injection pulse (µs).................................................................",
-			"Throttle position (mV)...............................................................",
-			"Throttle position mode...............................................................",
-			"Ignition timing (deg)................................................................",
-			"Supply voltage (V)...................................................................",
-			"Coolant temperature (°C).............................................................",
-			"Intake air temperature (°C)..........................................................",
-			"Idle air control valve position (%)..................................................",
-			"Power steering pressure mode.........................................................",
-			"Fuel tank vapor valve mode...........................................................",
-			"Automatic transmission mode..........................................................",
-			"Brake pedal position................................................................." };
-
+	
 	private JPanel panel;
 	private JButton faults, koeo, koer, data, disconnect;
 	private JCheckBox baud;
 	private JLabel label;
 	private JLabel labelConnect;
-	private JList<String> dataListParamNames;
+	private DefaultListModel<String> modelParam;
 	private JList<String> dataList;
-	private DefaultListModel<String> model;
 
 	{
 		panel = new JPanel(null);
@@ -49,9 +30,8 @@ public class StartView extends JFrame {
 		baud = new JCheckBox("other ECU");
 		label = new JLabel("");
 		labelConnect = new JLabel("");
-		dataListParamNames = new JList<>(PARAM_NAMES);
-		model = new DefaultListModel<>();
-		dataList = new JList<>(model);
+		modelParam = new DefaultListModel<>();
+		dataList = new JList<>(modelParam);
 
 		faults.setBounds(20, 10, 160, 40);
 		koeo.setBounds(200, 10, 80, 40);
@@ -61,8 +41,7 @@ public class StartView extends JFrame {
 		baud.setBounds(860, 10, 160, 20);
 		label.setBounds(20, 120, 900, 200);
 		labelConnect.setBounds(20, 500, 900, 20);
-		dataListParamNames.setBounds(148, 120, 300, 310);
-		dataList.setBounds(450, 120, 300, 310);
+		dataList.setBounds(240, 100, 400, 310);
 
 		panel.add(faults);
 		panel.add(koeo);
@@ -72,7 +51,6 @@ public class StartView extends JFrame {
 		panel.add(baud);
 		panel.add(label);
 		panel.add(labelConnect);
-		panel.add(dataListParamNames);
 		panel.add(dataList);
 		add(panel);
 	}
@@ -158,12 +136,12 @@ public class StartView extends JFrame {
 		this.labelConnect = labelConnect;
 	}
 
-	public JList<String> getDataListParamNames() {
-		return dataListParamNames;
+	public DefaultListModel<String> getModelParam() {
+		return modelParam;
 	}
 
-	public void setDataListParamNames(JList<String> dataListParamNames) {
-		this.dataListParamNames = dataListParamNames;
+	public void setModelParam(DefaultListModel<String> modelParam) {
+		this.modelParam = modelParam;
 	}
 
 	public JList<String> getDataList() {
@@ -173,13 +151,5 @@ public class StartView extends JFrame {
 	public void setDataList(JList<String> dataList) {
 		this.dataList = dataList;
 	}
-
-	public DefaultListModel<String> getModel() {
-		return model;
-	}
-
-	public void setModel(DefaultListModel<String> model) {
-		this.model = model;
-	}
-
+	
 }

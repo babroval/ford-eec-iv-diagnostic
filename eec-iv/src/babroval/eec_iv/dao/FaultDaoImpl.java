@@ -29,6 +29,7 @@ public class FaultDaoImpl implements Dao<Fault> {
 			while ((line = br.readLine()) != null) {
 
 				line = ++id + "," + line;
+
 				String[] csvLine = line.split(cvsSplitBy);
 				Fault fault = createFaultEntity(csvLine);
 
@@ -61,6 +62,11 @@ public class FaultDaoImpl implements Dao<Fault> {
 		} catch (Exception e) {
 			throw new RuntimeException("incorrect data in CSV file", e);
 		}
+	}
+
+	@Override
+	public List<Fault> loadAllParameters(String csvFilePath, StringBuffer data) {
+		throw new UnsupportedOperationException("Method has not implemented yet");
 	}
 
 }
