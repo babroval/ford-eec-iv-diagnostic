@@ -36,6 +36,7 @@ public class StartController extends Thread {
 	private static Service<Fault> faultService = new FaultServiceImpl();
 	private static Service<Parameter> parameterService = new ParameterServiceImpl();
 
+	private static Timer timer = new Timer();
 	{
 		try {
 			serialPort = ConnectionPool.getPool().getPort();
@@ -75,9 +76,9 @@ public class StartController extends Thread {
 					faults.clear();
 					faults.add("ECU faults:");
 					view.getFaults().setEnabled(false);
-					view.getBaud().setEnabled(false);
 					view.getDisconnect().setEnabled(false);
-					view.getLabelConnect().setText("Connection established. Reading ECU faults...");
+					view.getBaud().setEnabled(false);
+					view.getLabelConnect().setText("Connection established. Reading ECU faults...  Wait 30 seconds");
 
 					serialPort = ConnectionPool.getPool().getConnection();
 					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
@@ -92,24 +93,20 @@ public class StartController extends Thread {
 
 					serialPort.writeByte((byte) 1);
 
-					Timer timer = new Timer();
+					timer = new Timer();
 					timer.schedule(new TimerTask() {
 						@Override
 						public void run() {
-
 							try {
 								serialPort.closePort();
-
 								if (view.getLabel().getText().equals("")) {
 
 									resetFrame();
-
 									view.getLabelConnect().setText(
 											"ECU connection fault (check the wiring, reconnect USB cable, select or deselect checkbox 'other ECU', switch the ignition OFF and ON");
 									JOptionPane.showMessageDialog(view.getPanel(),
 											"ECU connection fault (check the wiring, reconnect USB cable, select or deselect checkbox 'other ECU', switch the ignition OFF and ON",
 											"", JOptionPane.WARNING_MESSAGE);
-
 								} else {
 									view.getFaults().setEnabled(false);
 									view.getKoeo().setEnabled(true);
@@ -122,8 +119,7 @@ public class StartController extends Thread {
 								resetFrame();
 							}
 						}
-					}, 30000);
-
+					}, 25000);
 				} catch (Exception e) {
 					resetFrame();
 					JOptionPane.showMessageDialog(view.getPanel(), "COM-port connection fault (check USB wiring)", "",
@@ -141,9 +137,11 @@ public class StartController extends Thread {
 					faults.add("KOEO test result faults:");
 					view.getLabel().setText("");
 					view.getLabel().setVisible(false);
+					view.getFaults().setEnabled(false);
 					view.getKoeo().setEnabled(false);
 					view.getDisconnect().setEnabled(false);
-					view.getLabelConnect().setText("Connection established. Performing KOEO test...");
+					view.getBaud().setEnabled(false);
+					view.getLabelConnect().setText("Connection established. Performing KOEO test...  Wait 1 minute");
 
 					serialPort = ConnectionPool.getPool().getConnection();
 					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
@@ -158,7 +156,7 @@ public class StartController extends Thread {
 
 					serialPort.writeByte((byte) 2);
 
-					Timer timer = new Timer();
+					timer = new Timer();
 					timer.schedule(new TimerTask() {
 						@Override
 						public void run() {
@@ -168,7 +166,7 @@ public class StartController extends Thread {
 								if (view.getLabel().getText().equals("")) {
 									resetFrame();
 									JOptionPane.showMessageDialog(view.getPanel(),
-											"There is no connection with the engine control unit (check wiring and switch the ignition ON)",
+											"ECU connection fault (check wiring and switch the ignition ON)",
 											"", JOptionPane.ERROR_MESSAGE);
 								} else {
 									view.getKoer().setEnabled(true);
@@ -180,7 +178,7 @@ public class StartController extends Thread {
 								resetFrame();
 							}
 						}
-					}, 30000);
+					}, 60000);
 
 				} catch (Exception e) {
 					resetFrame();
@@ -201,7 +199,8 @@ public class StartController extends Thread {
 					view.getLabel().setVisible(false);
 					view.getKoer().setEnabled(false);
 					view.getDisconnect().setEnabled(false);
-					view.getLabelConnect().setText("Connection established. Performing KOER test...");
+					view.getBaud().setEnabled(false);
+					view.getLabelConnect().setText("Connection established. Performing KOER test...  Wait 2 minutes");
 
 					serialPort = ConnectionPool.getPool().getConnection();
 					serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
@@ -216,7 +215,10 @@ public class StartController extends Thread {
 
 					serialPort.writeByte((byte) 2);
 
-					Timer timer = new Timer();
+					Thread.sleep(20000);
+					
+					view.getLabelConnect().setText("Performing KOER test..., press the brake pedal");
+					timer = new Timer();
 					timer.schedule(new TimerTask() {
 						@Override
 						public void run() {
@@ -229,8 +231,8 @@ public class StartController extends Thread {
 											"ECU connection fault (check the wiring and switch the ignition ON)", "",
 											JOptionPane.ERROR_MESSAGE);
 								} else {
-									view.getData().setEnabled(true);
 									view.getDisconnect().setEnabled(true);
+									view.getData().setEnabled(true);
 									view.getLabel().setVisible(true);
 									view.getLabelConnect()
 											.setText("Start the engine, if it is OFF, and press button 'DATA'");
@@ -239,8 +241,8 @@ public class StartController extends Thread {
 								resetFrame();
 							}
 						}
-					}, 30000);
-
+					}, 100000);
+					
 				} catch (Exception e) {
 					resetFrame();
 					JOptionPane.showMessageDialog(view.getPanel(), "COM-port connection fault (check USB wiring)", "",
@@ -259,8 +261,11 @@ public class StartController extends Thread {
 					view.getLabel().setText("Live Data:");
 					view.getLabel().setVisible(false);
 					view.getFaults().setEnabled(false);
+					view.getKoeo().setEnabled(false);
+					view.getKoer().setEnabled(false);
 					view.getData().setEnabled(false);
 					view.getDisconnect().setEnabled(false);
+					view.getBaud().setEnabled(false);
 					view.getDataList().setVisible(false);
 					view.getLabelConnect().setText("Connection established. Waiting for ECU live data...");
 
@@ -277,7 +282,7 @@ public class StartController extends Thread {
 
 					serialPort.writeByte((byte) 3);
 
-					Timer timer = new Timer();
+					timer = new Timer();
 					timer.schedule(new TimerTask() {
 						@Override
 						public void run() {
@@ -295,7 +300,7 @@ public class StartController extends Thread {
 							}
 
 						}
-					}, 20000);
+					}, 25000);
 
 				} catch (Exception e) {
 					resetFrame();
@@ -326,7 +331,7 @@ public class StartController extends Thread {
 		view.getFaults().setEnabled(true);
 		view.getKoeo().setEnabled(false);
 		view.getKoer().setEnabled(false);
-		view.getData().setEnabled(true);
+		view.getData().setEnabled(false);
 		view.getDisconnect().setEnabled(false);
 		view.getLabel().setText("");
 		view.getLabel().setVisible(false);
@@ -344,6 +349,7 @@ public class StartController extends Thread {
 					String receivedData = serialPort.readHexString(event.getEventValue());
 					System.out.println(receivedData);
 					if (receivedData.equals("19 A1")) {
+						timer.cancel();
 						resetFrame();
 						JOptionPane.showMessageDialog(view.getPanel(),
 								"ECU connection fault (check the wiring and switch the ignition ON)", "",
