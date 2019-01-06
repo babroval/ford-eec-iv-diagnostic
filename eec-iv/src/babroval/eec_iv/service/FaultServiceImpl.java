@@ -4,20 +4,19 @@ import java.util.List;
 
 import babroval.eec_iv.dao.Dao;
 import babroval.eec_iv.dao.FaultDaoImpl;
+import babroval.eec_iv.model.Fault;
 
-public class FaultServiceImpl<T> implements Service<T> {
+public class FaultServiceImpl implements Service<Fault> {
 
-	@SuppressWarnings("unchecked")
-	private Dao<T> dao = (Dao<T>) new FaultDaoImpl();
+	private Dao<Fault> dao = new FaultDaoImpl();
 
 	@Override
-	public List<T> getAllFaults(String csvFilePath) {
-		return dao.loadAllFaults(csvFilePath);
+	public List<Fault> getAll(String csvFilePath) {
+		return dao.loadAll(csvFilePath);
 	}
 
 	@Override
-	public List<T> getAllParameters(String csvFilePath, StringBuffer data) {
-		return dao.loadAllParameters(csvFilePath, data);
+	public List<Fault> updateAll(List<Fault> list, StringBuffer data) {
+		throw new UnsupportedOperationException("Method has not implemented yet");
 	}
-
 }

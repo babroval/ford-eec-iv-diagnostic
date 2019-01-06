@@ -28,13 +28,13 @@ public class StartController extends Thread {
 	private static SerialPort serialPort;
 	public static StartView view = new StartView();
 
-	private static List<Parameter> allParameters = new ArrayList<>();
 	private static List<Fault> allFaults = new ArrayList<>();
+	private static List<Parameter> allParameters = new ArrayList<>();
 	private static List<String> faults = new ArrayList<>();
 	private static StringBuffer data = new StringBuffer("");
 
-	private static Service<Parameter> parameterService = new ParameterServiceImpl<>();
-	private Service<Fault> faultService = new FaultServiceImpl<>();
+	private static Service<Fault> faultService = new FaultServiceImpl();
+	private static Service<Parameter> parameterService = new ParameterServiceImpl();
 
 	{
 		try {
@@ -45,7 +45,8 @@ public class StartController extends Thread {
 		resetFrame();
 
 		try {
-			allFaults = faultService.getAllFaults(FILE_FAULTS_PATH);
+			allFaults = faultService.getAll(FILE_FAULTS_PATH);
+			allParameters = parameterService.getAll(FILE_PARAMETERS_PATH);
 		} catch (Exception e) {
 			resetFrame();
 			JOptionPane.showMessageDialog(view.getPanel(), "CSV file reading fault", "", JOptionPane.ERROR_MESSAGE);
@@ -351,7 +352,7 @@ public class StartController extends Thread {
 						data.append(receivedData.replaceAll("\\s", ""));
 
 						if (64 == data.length()) {
-							allParameters = parameterService.getAllParameters(FILE_PARAMETERS_PATH, data);
+							allParameters = parameterService.updateAll(allParameters, data);
 							for (Parameter parameter : allParameters) {
 								view.getModelParam().add(parameter.getParameter_id() - 1,
 										parameter.getName() + parameter.getValue());
@@ -375,11 +376,10 @@ public class StartController extends Thread {
 					}
 				} catch (Exception e) {
 					resetFrame();
-					JOptionPane.showMessageDialog(view.getPanel(), "COM-port fault (check connection)", "",
+					JOptionPane.showMessageDialog(view.getPanel(), "COM-port fault (check connection)" + e, "",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
 	}
-
 }

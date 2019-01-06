@@ -1,12 +1,12 @@
 package babroval.eec_iv.model;
 
 public class Parameter {
-	
+
 	private Integer parameter_id = 0;
 	private String number = "";
 	private String name = "";
 	private String value = "";
-	
+
 	public Parameter() {
 	}
 
@@ -47,5 +47,5 @@ public class Parameter {
 		return "Parameter [parameter_id=" + parameter_id + ", number=" + number + ", name=" + name + ", value=" + value
 				+ "]";
 	}
-	
+
 }

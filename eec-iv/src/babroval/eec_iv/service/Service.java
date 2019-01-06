@@ -4,8 +4,7 @@ import java.util.List;
 
 public interface Service<T> {
 
-	List<T> getAllFaults(String csvFilePath);
+	List<T> getAll(String csvFilePath);
 
-	List<T> getAllParameters(String fileParametersPath, StringBuffer data);
-
+	List<T> updateAll(List<T> list, StringBuffer data);
 }

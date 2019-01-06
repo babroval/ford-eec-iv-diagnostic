@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class StartView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private JPanel panel;
 	private JButton faults, koeo, koer, data, disconnect;
 	private JCheckBox baud;
@@ -151,5 +151,5 @@ public class StartView extends JFrame {
 	public void setDataList(JList<String> dataList) {
 		this.dataList = dataList;
 	}
-	
+
 }

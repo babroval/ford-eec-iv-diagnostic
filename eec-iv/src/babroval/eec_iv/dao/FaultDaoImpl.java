@@ -1,50 +1,31 @@
 package babroval.eec_iv.dao;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import babroval.eec_iv.model.Fault;
+import babroval.eec_iv.util.CsvUtil;
 
 public class FaultDaoImpl implements Dao<Fault> {
 
 	@Override
-	public List<Fault> loadAllFaults(String csvFilePath) {
+	public List<Fault> loadAll(String csvFilePath) {
 
-		File csvFile = new File(csvFilePath);
-		String line = "";
 		String cvsSplitBy = ",";
+		List<String> allLines = CsvUtil.loadAllLinesFromCsvFile(csvFilePath);
 
-		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+		List<Fault> allEntities = new ArrayList<>();
 
-			if (csvFile.length() == 0) {
-				throw new RuntimeException();
-			}
+		for (String line : allLines) {
 
-			List<Fault> allFaults = new ArrayList<Fault>();
-			int id = 0;
-
-			while ((line = br.readLine()) != null) {
-
-				line = ++id + "," + line;
-
-				String[] csvLine = line.split(cvsSplitBy);
-				Fault fault = createFaultEntity(csvLine);
-
-				allFaults.add(fault);
-			}
-
-			return allFaults;
-
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+			String[] csvLine = line.split(cvsSplitBy);
+			Fault entity = createEntity(csvLine);
+			allEntities.add(entity);
 		}
-
+		return allEntities;
 	}
 
-	private static Fault createFaultEntity(String[] csvLine) {
+	private static Fault createEntity(String[] csvLine) {
 
 		try {
 			Integer fault_id = Integer.valueOf(csvLine[0].trim());
@@ -63,10 +44,4 @@ public class FaultDaoImpl implements Dao<Fault> {
 			throw new RuntimeException("incorrect data in CSV file", e);
 		}
 	}
-
-	@Override
-	public List<Fault> loadAllParameters(String csvFilePath, StringBuffer data) {
-		throw new UnsupportedOperationException("Method has not implemented yet");
-	}
-
 }
