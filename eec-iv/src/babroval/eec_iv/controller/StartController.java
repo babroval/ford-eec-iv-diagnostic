@@ -166,8 +166,8 @@ public class StartController extends Thread {
 								if (view.getLabel().getText().equals("")) {
 									resetFrame();
 									JOptionPane.showMessageDialog(view.getPanel(),
-											"ECU connection fault (check wiring and switch the ignition ON)",
-											"", JOptionPane.ERROR_MESSAGE);
+											"ECU connection fault (check wiring and switch the ignition ON)", "",
+											JOptionPane.ERROR_MESSAGE);
 								} else {
 									view.getKoer().setEnabled(true);
 									view.getDisconnect().setEnabled(true);
@@ -215,10 +215,17 @@ public class StartController extends Thread {
 
 					serialPort.writeByte((byte) 2);
 
-					Thread.sleep(20000);
-					
-					view.getLabelConnect().setText("Performing KOER test..., press the brake pedal");
 					timer = new Timer();
+					timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							view.getLabelConnect()
+							.setText("Performing KOER test... Press and release the brake pedal,"
+									+ " turn steering wheel one-half turn,"
+									+ " cycle the Overdrive Cancel Switch On and Off, if equipped and wait 1 minute");
+						}
+					}, 35000);
+					
 					timer.schedule(new TimerTask() {
 						@Override
 						public void run() {
@@ -241,8 +248,8 @@ public class StartController extends Thread {
 								resetFrame();
 							}
 						}
-					}, 100000);
-					
+					}, 110000);
+
 				} catch (Exception e) {
 					resetFrame();
 					JOptionPane.showMessageDialog(view.getPanel(), "COM-port connection fault (check USB wiring)", "",
