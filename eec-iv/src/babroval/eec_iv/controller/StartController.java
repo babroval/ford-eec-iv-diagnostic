@@ -338,7 +338,7 @@ public class StartController extends Thread {
 		view.getFaults().setEnabled(true);
 		view.getKoeo().setEnabled(false);
 		view.getKoer().setEnabled(false);
-		view.getData().setEnabled(false);
+		view.getData().setEnabled(true);
 		view.getDisconnect().setEnabled(false);
 		view.getLabel().setText("");
 		view.getLabel().setVisible(false);

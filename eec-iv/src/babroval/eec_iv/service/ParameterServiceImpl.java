@@ -27,12 +27,23 @@ public class ParameterServiceImpl implements Service<Parameter> {
 	private static String setValue(String parameterNumber, StringBuffer data) {
 
 		String value = "";
+		Integer i = 0, j = 0;
+
 		switch (parameterNumber) {
 		case "1":
-			value = data.substring(0, 4);
+			i = Integer.parseInt(data.substring(0, 2), 16);
+			j = Integer.parseInt("0" + data.substring(3, 4), 16);
+			i = (i * 4) + (j * 1024);
+			i = ((i + 5) / 10) * 10;
+			value = String.valueOf(i);
 			break;
 		case "2":
-			value = data.substring(4, 8);
+			i = Integer.parseInt("0" + data.substring(19, 20), 16);
+			System.out.println(i);
+			j = Integer.parseInt("0" + data.substring(16, 17), 16);
+			System.out.println(j);
+			i = 128 - ((i * 16) + j);
+			value = String.valueOf(i);
 			break;
 		case "3":
 			value = data.substring(8, 12);
