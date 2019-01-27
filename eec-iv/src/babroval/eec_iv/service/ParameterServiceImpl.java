@@ -46,13 +46,29 @@ public class ParameterServiceImpl implements Service<Parameter> {
 			value = String.valueOf(i);
 			break;
 		case "3":
-			value = data.substring(8, 12);
+			i = Integer.parseInt(data.substring(8, 10), 16);
+			j = 4 - Integer.parseInt("0" + data.substring(11, 12), 16);
+			i = ((256 * j) - i) * 2675 / 1000;
+			value = String.valueOf(i);
 			break;
 		case "4":
-			value = data.substring(12, 16);
+			if (data.substring(48, 52).equals("3090")) {
+				value = "Opened";
+			} else {
+				value = "Closed";
+			}
 			break;
 		case "5":
-			value = data.substring(16, 20);
+			i = Integer.parseInt(data.substring(32, 34), 16);
+			i = i * 10 / 256;
+			j = Integer.parseInt("0" + data.substring(35, 36), 16);
+			if (j.equals(0) && i.equals(0)) {
+				value = "0";
+			} else if (j.equals(0) && !i.equals(0)) {
+				value = String.valueOf(i) + "00";
+			} else {
+				value = String.valueOf(j) + String.valueOf(i) + "00";
+			}
 			break;
 		case "6":
 			value = data.substring(20, 24);
@@ -64,7 +80,7 @@ public class ParameterServiceImpl implements Service<Parameter> {
 			value = data.substring(28, 32);
 			break;
 		case "9":
-			value = data.substring(32, 36);
+			value = data.substring(16, 20);
 			break;
 		case "10":
 			value = data.substring(36, 40);
@@ -79,7 +95,7 @@ public class ParameterServiceImpl implements Service<Parameter> {
 			value = data.substring(48, 52);
 			break;
 		case "14":
-			value = data.substring(52, 56);
+			value = data.substring(12, 16);
 			break;
 		case "15":
 			value = data.substring(56, 60);
