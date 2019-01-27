@@ -27,7 +27,8 @@ public class ParameterServiceImpl implements Service<Parameter> {
 	private static String setValue(String parameterNumber, StringBuffer data) {
 
 		String value = "";
-		Integer i = 0, j = 0;
+		String temp = "";
+		Integer i = 0, j = 0, k = 0;
 
 		switch (parameterNumber) {
 		case "1":
@@ -50,7 +51,8 @@ public class ParameterServiceImpl implements Service<Parameter> {
 			value = String.valueOf(i);
 			break;
 		case "4":
-			if (data.substring(48, 52).equals("3090")) {
+			temp = data.substring(48, 52);
+			if (temp.equals("3090")) {
 				value = "Opened";
 			} else {
 				value = "Closed";
@@ -77,46 +79,77 @@ public class ParameterServiceImpl implements Service<Parameter> {
 		case "7":
 			i = Integer.parseInt(data.substring(12, 14), 16);
 			j = Integer.parseInt("0" + data.substring(15, 16), 16);
-			Integer temp = (256 * j + i) * 5 / 200;
-			i = ((256 * j + i) - temp) * 5;
+			k = (256 * j + i) * 5 / 200;
+			i = ((256 * j + i) - k) * 5;
 			value = String.valueOf(i);
 			break;
 		case "8":
-			String s = data.substring(44, 46);
-			if (s.equals("FF")) {
+			temp = data.substring(44, 46);
+			if (temp.equals("FF")) {
 				value = "Closed";
-			} else if (s.equals("00")) {
+			} else if (temp.equals("00")) {
 				value = "Partially Opened";
-			} else if (s.equals("01")) {
+			} else if (temp.equals("01")) {
 				value = "Fully Opened";
 			}
 			break;
 		case "9":
-			value = data.substring(16, 20);
+			i = Integer.parseInt(data.substring(40, 42), 16) / 4;
+			value = String.valueOf(i);
 			break;
 		case "10":
-			value = data.substring(20, 24);
+			i = Integer.parseInt("0" + data.substring(4, 5), 16);
+			j = Integer.parseInt("0" + data.substring(5, 6), 16);
+			j = j * 10 / 16;
+			value = String.valueOf(i) + "." + String.valueOf(j);
 			break;
 		case "11":
-			value = data.substring(40, 44);
+			i = Integer.parseInt(data.substring(20, 22), 16);
+			i = (i - 16) / 10 + i - 15;
+			value = String.valueOf(i);
 			break;
 		case "12":
-			value = data.substring(44, 48);
+			i = Integer.parseInt(data.substring(24, 26), 16);
+			i = (i - 16) / 10 + i - 15;
+			value = String.valueOf(i);
 			break;
 		case "13":
-			value = data.substring(48, 52);
+			i = Integer.parseInt("0" + data.substring(28, 29), 16);
+			j = Integer.parseInt("0" + data.substring(31, 32), 16);
+			i = (((15 * j) + i) * 80 + 45 * j) / 100;
+			value = String.valueOf(i);
 			break;
 		case "14":
-			value = data.substring(24, 28);
+			temp = data.substring(52, 56);
+			if (temp.equals("1380") | temp.equals("1290") | temp.equals("32B0")) {
+				value = "High";
+			} else {
+				value = "Low";
+			}
 			break;
 		case "15":
-			value = data.substring(56, 60);
+			temp = data.substring(56, 60);
+			if (temp.equals("80EC")) {
+				value = "Opened";
+			} else {
+				value = "Closed";
+			}
 			break;
 		case "16":
-			value = data.substring(60, 64);
+			temp = data.substring(56, 60);
+			if (temp.equals("0028") | temp.equals("80A8") | temp.equals("2008") | temp.equals("A088")) {
+				value = "N or P";
+			} else if (temp.equals("4068") | temp.equals("C0E8") | temp.equals("6048") | temp.equals("E0C8")) {
+				value = "D or R";
+			}
 			break;
 		case "17":
-			value = data.substring(60, 64);
+			temp = data.substring(56, 60);
+			if (temp.equals("0028") | temp.equals("80A8") | temp.equals("4068") | temp.equals("C0E8")) {
+				value = "Released";
+			} else if (temp.equals("2008") | temp.equals("A088") | temp.equals("6048") | temp.equals("E0C8")) {
+				value = "Pressed";
+			}
 			break;
 		default:
 			throw new RuntimeException("incorrect data");
