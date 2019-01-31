@@ -13,6 +13,10 @@ public class Fault {
 		this.fault_id = fault_id;
 	}
 
+	public Fault(String number) {
+		this.number = number;
+	}
+
 	public Fault(Integer fault_id, String number) {
 		this.fault_id = fault_id;
 		this.number = number;
@@ -94,5 +98,4 @@ public class Fault {
 	public String toString() {
 		return "Fault [fault_id=" + fault_id + ", number=" + number + ", info=" + info + "]";
 	}
-
 }

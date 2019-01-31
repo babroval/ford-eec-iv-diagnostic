@@ -151,5 +151,4 @@ public class StartView extends JFrame {
 	public void setDataList(JList<String> dataList) {
 		this.dataList = dataList;
 	}
-
 }

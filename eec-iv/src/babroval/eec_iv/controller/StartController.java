@@ -52,7 +52,6 @@ public class StartController extends Thread {
 			resetFrame();
 			JOptionPane.showMessageDialog(view.getPanel(), "CSV file reading fault", "", JOptionPane.ERROR_MESSAGE);
 		}
-
 	}
 
 	public StartController() {
@@ -76,6 +75,7 @@ public class StartController extends Thread {
 					faults.clear();
 					faults.add("ECU faults:");
 					view.getFaults().setEnabled(false);
+					view.getData().setEnabled(false);
 					view.getDisconnect().setEnabled(false);
 					view.getBaud().setEnabled(false);
 					view.getLabelConnect().setText("Connection established. Reading ECU faults...  Wait 30 seconds");
@@ -219,13 +219,12 @@ public class StartController extends Thread {
 					timer.schedule(new TimerTask() {
 						@Override
 						public void run() {
-							view.getLabelConnect()
-							.setText("Performing KOER test... Press and release the brake pedal,"
+							view.getLabelConnect().setText("Performing KOER test... Press and release the brake pedal,"
 									+ " turn steering wheel one-half turn,"
 									+ " cycle the Overdrive Cancel Switch On and Off, if equipped and wait 1 minute");
 						}
 					}, 35000);
-					
+
 					timer.schedule(new TimerTask() {
 						@Override
 						public void run() {
@@ -354,7 +353,7 @@ public class StartController extends Thread {
 			if (event.isRXCHAR() && event.getEventValue() > 0) {
 				try {
 					String receivedData = serialPort.readHexString(event.getEventValue());
-					System.out.println(receivedData);
+//					System.out.println(receivedData);
 					if (receivedData.equals("19 A1")) {
 						timer.cancel();
 						resetFrame();

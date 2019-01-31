@@ -88,7 +88,7 @@ public class ParameterServiceImpl implements Service<Parameter> {
 			if (temp.equals("FF")) {
 				value = "Closed";
 			} else if (temp.equals("00")) {
-				value = "Partially Opened";
+				value = "Part. Opened";
 			} else if (temp.equals("01")) {
 				value = "Fully Opened";
 			}
