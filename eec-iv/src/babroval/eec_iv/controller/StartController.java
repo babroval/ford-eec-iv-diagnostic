@@ -70,7 +70,6 @@ public class StartController extends Thread {
 		view.getFaults().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-
 				try {
 					faults.clear();
 					faults.add("ECU faults:");
@@ -131,7 +130,6 @@ public class StartController extends Thread {
 		view.getKoeo().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-
 				try {
 					faults.clear();
 					faults.add("KOEO test result faults:");
@@ -191,7 +189,6 @@ public class StartController extends Thread {
 		view.getKoer().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-
 				try {
 					faults.clear();
 					faults.add("KOER test result faults:");
@@ -260,7 +257,6 @@ public class StartController extends Thread {
 		view.getData().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-
 				try {
 					faults.clear();
 					data.setLength(0);
@@ -304,7 +300,6 @@ public class StartController extends Thread {
 								view.getDataList().setVisible(true);
 								view.getLabelConnect().setText("Connection established. Reading ECU live data...");
 							}
-
 						}
 					}, 25000);
 
@@ -318,7 +313,6 @@ public class StartController extends Thread {
 	}
 
 	private static void resetFrame() {
-
 		try {
 			if (serialPort.isOpened()) {
 				serialPort.closePort();
@@ -343,11 +337,9 @@ public class StartController extends Thread {
 		view.getLabel().setVisible(false);
 		view.getDataList().setVisible(false);
 		view.getLabelConnect().setText("Connect scanner, switch the ignition ON and press button 'FAULTS'");
-
 	}
 
 	private static class PortReader implements SerialPortEventListener {
-
 		@Override
 		public void serialEvent(SerialPortEvent event) {
 			if (event.isRXCHAR() && event.getEventValue() > 0) {
@@ -379,7 +371,6 @@ public class StartController extends Thread {
 								faults.add(faultNumber + "  " + fault.getInfo());
 							}
 						}
-
 						String str = "<html>";
 						for (String fault : faults) {
 							str = str + fault + "<br>";
