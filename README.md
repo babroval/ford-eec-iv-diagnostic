@@ -7,7 +7,7 @@ Java desktop project for diagnostic petrol multipoint injection for cars with
 Ford EEC-IV ECU(engine control unit).
 
 The principle is, that commands from USB port converts by bridge CP2101 to UART0 port of AVR controller, and commands from other UART1 port of controller converts by transceiver 75ALS176 to Ford EEC-IV diagnostic port with Ford DCL communication standard which is the same as RS-485 standard with minor changes.
-An usual USB-RS485 converter can't synchronize with ECU because of losing time for virtual COM port emulation, so controller, in this case, is like a "cache" or a "buffer".
+An usual USB-RS485 converter can't synchronize with ECU because of losing time for virtual COM port emulation, so controller, in this case, is like a "cache" or a "buffer". All DCL commands, which I found experimentally, are in github.com/babroval/ford-eec-iv-diagnostic/blob/master/DCL_communication_map.pdf.
  
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/babroval/ford-eec-iv-scanner/blob/master/LICENSE)
 ```
