@@ -3,8 +3,8 @@
 
 FORD EEC-IV diagnostic scanner
 ==============================
-Java desktop project for diagnostic petrol multipoint injection for cars with 
-Ford EEC-IV ECU(engine control unit).
+Java desktop project for petrol engines diagnostic for cars with
+Ford EEC-IV ECU with DCL communication data bus goes from ECU pins number 18 and number 19.
 
 The principle is, that commands from USB port converts by bridge CP2101 to UART0 port of AVR controller, and commands from other UART1 port of controller converts by transceiver 75ALS176 to Ford EEC-IV diagnostic port with Ford DCL communication standard which is the same as RS-485 standard with minor changes.
 An usual USB-RS485 converter can't synchronize with ECU because of losing time for virtual COM port emulation, so controller, in this case, is like a "cache" or a "buffer". Most of DCL commands, which were found experimentally, are in DCL_communication_map.pdf file.
