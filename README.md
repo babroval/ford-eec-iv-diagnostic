@@ -27,7 +27,7 @@ Table of Contents
 Requirements
 ------------
   The FORD EEC-IV scanner interface board can be made independently or a ready module can be found, for example:
-  * [Crumb124][crumb124]
+  * [Crumb128 V4 USB RS485 Modul][crumb128]
   <br/>The first part of the code for AVR controller was creating in Assembly language. The EEC-IV_asm file is a bit messy, so EEC-IV.hex for ATmega128 is included to write flash memory by any cheap analog of AVR programmer:
   * [AVRISP][avrisp]
   <br/>In this part everything can be done with:
@@ -58,7 +58,7 @@ License
 Self-Storage Unit is licensed under the [MIT][mit] license.  
 
 [avrisp]: https://www.microchip.com/developmenttools/ProductDetails/atavrisp2
-[crumb124]: https://www.chip45.com
+[crumb128]: https://www.chip45.com/atmega128-usb-rs485-module.html
 [avr]: http://www.microchip.com/mplab/avr-support/avr-and-sam-downloads-archive
 [jre]: http://www.oracle.com/technetwork/java/javase/downloads/
 [eclipse]: https://www.eclipse.org/downloads/
