@@ -1,0 +1,17 @@
+1, Engine speed (RPM)_________________________________
+2, Fuel correction (%)___________________________________
+3, Heated oxygen sensor (mV)____________________________
+4, Heated oxygen sensor circuit mode_________________
+5, Air flow meter (mV)_________________________________
+6, Injection pulse (µs)_________________________________
+7, Throttle position (mV)_______________________________
+8, Throttle position mode___________________________
+9, Ignition timing (deg)__________________________________
+10, Supply voltage (V)__________________________________
+11, Coolant temperature (°C)_____________________________
+12, Intake air temperature (°C)____________________________
+13, Idle air control valve position (%)________________________
+14, Power steering pressure mode_______________________
+15, Fuel tank vapor valve mode_________________________
+16, Automatic transmission mode_______________________
+17, Brake pedal position_____________________________
