@@ -33,14 +33,14 @@ public class StartView extends JFrame {
 		modelParam = new DefaultListModel<>();
 		dataList = new JList<>(modelParam);
 
-		faults.setBounds(20, 10, 160, 40);
-		koeo.setBounds(200, 10, 80, 40);
-		koer.setBounds(285, 10, 80, 40);
-		data.setBounds(385, 10, 160, 40);
-		disconnect.setBounds(680, 10, 160, 40);
-		baud.setBounds(860, 10, 160, 20);
+		faults.setBounds(20, 20, 160, 40);
+		koeo.setBounds(200, 20, 80, 40);
+		koer.setBounds(285, 20, 80, 40);
+		data.setBounds(385, 20, 160, 40);
+		disconnect.setBounds(680, 20, 160, 40);
+		baud.setBounds(860, 20, 160, 20);
 		label.setBounds(20, 120, 900, 200);
-		labelConnect.setBounds(15, 500, 990, 20);
+		labelConnect.setBounds(20, 470, 990, 20);
 		dataList.setBounds(240, 100, 400, 310);
 
 		panel.add(faults);
