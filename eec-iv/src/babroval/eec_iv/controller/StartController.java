@@ -2,6 +2,7 @@ package babroval.eec_iv.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -23,8 +24,8 @@ import jssc.SerialPortException;
 
 public class StartController extends Thread {
 
-	private static final String FILE_FAULTS_PATH = "EECIVFaults.csv";
-	private static final String FILE_PARAMETERS_PATH = "EECIVParameters.csv";
+	private static final String FILE_FAULTS_PATH = "/EECIVFaults.csv";
+	private static final String FILE_PARAMETERS_PATH = "/EECIVParameters.csv";
 	private static SerialPort serialPort;
 	public static StartView view = new StartView();
 
@@ -46,8 +47,10 @@ public class StartController extends Thread {
 		resetFrame();
 
 		try {
-			allFaults = faultService.getAll(FILE_FAULTS_PATH);
-			allParameters = parameterService.getAll(FILE_PARAMETERS_PATH);
+			InputStream csvFile = getClass().getResourceAsStream(FILE_FAULTS_PATH);
+			allFaults = faultService.getAll(csvFile);
+			csvFile = getClass().getResourceAsStream(FILE_PARAMETERS_PATH);
+			allParameters = parameterService.getAll(csvFile);
 		} catch (Exception e) {
 			resetFrame();
 			JOptionPane.showMessageDialog(view.getPanel(), "CSV file reading fault", "", JOptionPane.ERROR_MESSAGE);

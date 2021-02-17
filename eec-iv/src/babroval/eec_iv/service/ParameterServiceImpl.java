@@ -1,5 +1,6 @@
 package babroval.eec_iv.service;
 
+import java.io.InputStream;
 import java.util.List;
 
 import babroval.eec_iv.dao.Dao;
@@ -11,8 +12,8 @@ public class ParameterServiceImpl implements Service<Parameter> {
 	private Dao<Parameter> dao = new ParameterDaoImpl();
 
 	@Override
-	public List<Parameter> getAll(String csvFilePath) {
-		return dao.loadAll(csvFilePath);
+	public List<Parameter> getAll(InputStream csvFile) {
+		return dao.loadAll(csvFile);
 	}
 
 	@Override

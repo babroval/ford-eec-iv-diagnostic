@@ -1,5 +1,6 @@
 package babroval.eec_iv.dao;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +10,10 @@ import babroval.eec_iv.util.CsvUtil;
 public class FaultDaoImpl implements Dao<Fault> {
 
 	@Override
-	public List<Fault> loadAll(String csvFilePath) {
+	public List<Fault> loadAll(InputStream csvFile) {
 
 		String cvsSplitBy = ",";
-		List<String> allLines = CsvUtil.loadAllLinesFromCsvFile(csvFilePath);
+		List<String> allLines = CsvUtil.loadAllLinesFromCsvFile(csvFile);
 
 		List<Fault> allEntities = new ArrayList<>();
 

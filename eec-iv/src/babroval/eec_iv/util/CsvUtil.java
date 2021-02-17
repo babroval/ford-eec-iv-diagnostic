@@ -1,22 +1,21 @@
 package babroval.eec_iv.util;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class CsvUtil {
 
-	public static List<String> loadAllLinesFromCsvFile(String csvFilePath) {
+	public static List<String> loadAllLinesFromCsvFile(InputStream csvFile) {
 
-		File csvFile = new File(csvFilePath);
 		List<String> allLines = new ArrayList<>();
 		String line = "";
 
-		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(csvFile))) {
 
-			if (csvFile.length() == 0) {
+			if (csvFile.available() < 0) {
 				throw new RuntimeException("CSV file is empty");
 			}
 

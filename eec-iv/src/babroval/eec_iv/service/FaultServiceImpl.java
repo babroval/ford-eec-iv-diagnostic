@@ -1,5 +1,6 @@
 package babroval.eec_iv.service;
 
+import java.io.InputStream;
 import java.util.List;
 
 import babroval.eec_iv.dao.Dao;
@@ -11,8 +12,8 @@ public class FaultServiceImpl implements Service<Fault> {
 	private Dao<Fault> dao = new FaultDaoImpl();
 
 	@Override
-	public List<Fault> getAll(String csvFilePath) {
-		return dao.loadAll(csvFilePath);
+	public List<Fault> getAll(InputStream csvFile) {
+		return dao.loadAll(csvFile);
 	}
 
 	@Override
