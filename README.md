@@ -27,7 +27,7 @@ Table of Contents
 Requirements
 ------------
   The FORD EEC-IV scanner interface board can be made independently or a ready module can be found, for example:
-  * [Crumb128 V4 USB RS485 Modul][crumb128] on chip45.com
+  * [Crumb128 V4 USB RS485 Modul][crumb128] with bootloader and quartz 16.0000MHz on chip45.com
   <br/>The first part of the code for AVR controller was creating in Assembly language. The EEC-IV_asm file is a bit messy, so EEC-IV.hex for ATmega128 is included and ready to write flash memory by any cheap analog of AVR programmer:
   * [AVRISP][avrisp]
   <br/>In this part everything can be done with:
