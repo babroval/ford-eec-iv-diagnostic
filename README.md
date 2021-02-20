@@ -66,6 +66,6 @@ Self-Storage Unit is licensed under the [MIT][mit] license.
 [avr]: http://www.microchip.com/mplab/avr-support/avr-and-sam-downloads-archive
 [jre]: https://www.java.com/en/download/
 [eclipse]: https://www.eclipse.org/downloads/
-[video]: https://youtu.be/_tYgx0pePy0/
+[video]: https://youtu.be/0mJQrj8HoHk/
 [mit]: https://github.com/babroval/ford-eec-iv-scanner/blob/master/LICENSE/
 
