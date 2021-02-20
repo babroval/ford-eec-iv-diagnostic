@@ -6,8 +6,8 @@ FORD EEC-IV diagnostic scanner
 Java desktop project for petrol engines diagnostic for cars with
 Ford EEC-IV ECU with DCL communication data bus goes from ECU pins number 18 and number 19.
 
-The principle is, that commands from USB port converts by bridge CP2101 to UART0 port of AVR controller, and commands from other UART1 port of controller converts by transceiver 75ALS176 to Ford EEC-IV diagnostic port with Ford DCL communication standard which is the same as RS-485 standard with minor changes.
-An usual USB-RS485 converter can't synchronize with ECU because of losing time for virtual COM port emulation, so controller, in this case, is like a "cache" or a "buffer". Most of DCL commands, which were found experimentally, are in DCL_communication_map.pdf file.
+The principle is, that commands from USB port converts by bridge CP2101 to UART0 port of AVR controller, and instructions from other UART1 port of controller converts by transceiver 75ALS176 for Ford EEC-IV diagnostic port with Ford DCL communication standard which is the same as RS-485 standard with minor changes.
+Usual USB-RS485 converter can not synchronize with ECU because of losing time for virtual COM port emulation, so controller, in this case, is like a "cache" or a "buffer". Most of DCL command instructions, which were found experimentally, are in [DCL_communication_map.pdf][commap] file.
  
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/babroval/ford-eec-iv-scanner/blob/master/LICENSE)
 ```
@@ -37,8 +37,11 @@ Requirements
 
 Usage
 -----
-FORD EEC-IV scanner is easiest to use with [Eclipse IDE][eclipse]:  
+The project is easy to manage with [Eclipse IDE][eclipse]:
 File -> Import -> Git -> Projects From Git > URI
+
+And here is a link to full video guide:
+[FORD EEC-IV diagnostic scanner installation][video]  
 
 #### Error handling
 All exceptions are converted into unchecked type to
@@ -57,10 +60,12 @@ License
 -------
 Self-Storage Unit is licensed under the [MIT][mit] license.  
 
+[commap]: https://github.com/babroval/ford-eec-iv-diagnostic/blob/master/DCL_communication_map.pdf/
 [avrisp]: https://www.microchip.com/developmenttools/ProductDetails/atavrisp2
 [crumb128]: https://www.chip45.com/atmega128-usb-rs485-module.html
 [avr]: http://www.microchip.com/mplab/avr-support/avr-and-sam-downloads-archive
-[jre]: http://www.oracle.com/technetwork/java/javase/downloads/
+[jre]: https://www.java.com/en/download/
 [eclipse]: https://www.eclipse.org/downloads/
+[video]: https://youtu.be/_tYgx0pePy0/
 [mit]: https://github.com/babroval/ford-eec-iv-scanner/blob/master/LICENSE/
 
