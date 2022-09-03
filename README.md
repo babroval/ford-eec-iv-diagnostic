@@ -41,9 +41,6 @@ Usage
 The project is easy to manage with [Eclipse IDE][eclipse]:
 File -> Import -> Git -> Projects From Git > URI
 
-Here is a link to full video guide:
-[FORD EEC-IV diagnostic scanner installation][video]  
-
 #### Error handling
 All exceptions are converted into unchecked type to
 keep code clean as possible.
