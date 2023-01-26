@@ -56,7 +56,7 @@ commit your code on a separate branch.
 
 License
 -------
-Self-Storage Unit is licensed under the [MIT][mit] license.  
+FORD EEC-IV diagnostic scanner is licensed under the [MIT][mit] license.  
 
 [commap]: https://github.com/babroval/ford-eec-iv-diagnostic/blob/master/DCL_communication_map.pdf/
 [avrisp]: https://www.microchip.com/developmenttools/ProductDetails/atavrisp2
